@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 @Entity @DiscriminatorValue("BOOK")
 public class BookEntity extends PublicationEntity {
     private String author;
+    private String isbn;
     public BookEntity() {}
     public BookEntity(String t, double p, int c, String a) { super(t, p, c); this.author = a; }
     public String getAuthor() { return author; }
