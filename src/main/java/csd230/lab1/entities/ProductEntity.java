@@ -17,6 +17,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
     @ManyToMany(mappedBy = "products")
     private Set<CartEntity> carts = new HashSet<>();
 
@@ -43,6 +44,11 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getProductType() {
+        return this.getClass().getSimpleName();
+    }
+
 
     @Override
     public String toString() {
