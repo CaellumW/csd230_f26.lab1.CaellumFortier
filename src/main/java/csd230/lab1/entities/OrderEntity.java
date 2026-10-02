@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity @DiscriminatorValue("ORDER")
@@ -64,6 +65,19 @@ public class OrderEntity extends PublicationEntity {
 
     public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OrderEntity that = (OrderEntity) o;
+        return id == that.id && Double.compare(totalAmount, that.totalAmount) == 0 && Objects.equals(products, that.products) && Objects.equals(orderDate, that.orderDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), products, id, totalAmount, orderDate);
     }
 
     @Override

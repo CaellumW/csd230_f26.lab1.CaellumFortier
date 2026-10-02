@@ -8,6 +8,8 @@ classDiagram
     SaleableItem <|.. Product
     Serializable <|.. Product
     Product <-- CashTill
+    OrderEntity <-- CartEntity
+    CartEntity <-- Product
 
     class Product{
         -String productId
@@ -60,8 +62,8 @@ classDiagram
         +toString()
         +equals()
         +hashCode()
-
     }
+
     class Magazine{
         -int orderQty
         -java.util.Date currentIssue
@@ -73,6 +75,7 @@ classDiagram
         +initialize()
         +sellItem()
     }
+
     class DiscMag{
         -boolean hasDisc
         +edit()
@@ -80,7 +83,7 @@ classDiagram
         +sellItem()
 
         +DiscMag()
-        +DiscMag(boolean, hasDisc, int orderQty, Date currentIssue, String title, double price, int copies)
+        +DiscMag(boolean hasDisc, int orderQty, Date currentIssue, String title, double price, int copies)
 
     }
     class CashTill{
@@ -93,5 +96,21 @@ classDiagram
         <<interface>>
         +sellItem()
         +getPrice()
+    }
+    class OrderEntity {
+        -Long id
+        -double totalAmount
+        -LocalDateTime orderDate
+
+        +OrderEntity()
+        +OrderEntity(String t, double p, int c)
+        +toString()
+        +equals()
+        +hashCode()
+    }
+    class CartEntity {
+        -Long id
+        -Set<ProductEntity> products
+
 
     }
