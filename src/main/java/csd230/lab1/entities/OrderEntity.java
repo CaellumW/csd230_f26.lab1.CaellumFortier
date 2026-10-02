@@ -3,6 +3,7 @@ package csd230.lab1.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -33,6 +34,10 @@ public class OrderEntity extends PublicationEntity {
 
     public OrderEntity(String t, double p, int c) {
         super(t, p, c);
+    }
+
+    public Set<ProductEntity> getProducts() {
+        return products;
     }
 
     @Override

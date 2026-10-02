@@ -4,7 +4,7 @@ import csd230.lab1.entities.CartEntity;
 import csd230.lab1.entities.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderEntityRepository extends JpaRepository<CartEntity, Long> {
+public interface OrderEntityRepository extends JpaRepository<OrderEntity, Long> {
 
     OrderEntity findByID(int ID);
 }
