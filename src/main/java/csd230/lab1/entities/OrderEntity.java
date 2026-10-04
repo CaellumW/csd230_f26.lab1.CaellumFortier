@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity @DiscriminatorValue("ORDER")
-@Table(name = "order_entity")
 public class OrderEntity extends PublicationEntity {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
