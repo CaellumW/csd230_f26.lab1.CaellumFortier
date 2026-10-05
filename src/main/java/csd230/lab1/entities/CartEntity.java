@@ -39,9 +39,6 @@ public class CartEntity {
         product.getCarts().add(this);
     }
 
-    public Set<ProductEntity> listProducts() {
-        return products;
-    }
 
     public Long getId() {
         return id;
