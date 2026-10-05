@@ -29,9 +29,6 @@ public class CartEntity {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-
-
-
     private Set<ProductEntity> products = new LinkedHashSet<>();
 
     public void addProduct(ProductEntity product) {
