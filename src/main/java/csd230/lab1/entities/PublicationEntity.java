@@ -6,17 +6,15 @@ import jakarta.persistence.Entity;
 @Entity
 public abstract class PublicationEntity extends ProductEntity {
     private String title;
-    @Column(name = "pub_price")
-    private double price;
     private int copies;
 
     public PublicationEntity() {
     }
 
-    public PublicationEntity(String t, double p, int c) {
-        this.title = t;
-        this.price = p;
-        this.copies = c;
+    public PublicationEntity(String title, double price, int copies) {
+        this.title = title;
+        super.setPrice(price);
+        this.copies = copies;
     }
 
     @Override
@@ -29,21 +27,12 @@ public abstract class PublicationEntity extends ProductEntity {
         }
     }
 
-    @Override
-    public double getPrice() {
-        return price;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String t) {
         this.title = t;
-    }
-
-    public void setPrice(double p) {
-        this.price = p;
     }
 
     public int getCopies() {
@@ -56,6 +45,9 @@ public abstract class PublicationEntity extends ProductEntity {
 
     @Override
     public String toString() {
-        return "Pub{title='" + title + "', price=" + price + ", copies=" + copies + "}";
+        return "PublicationEntity{" +
+                "title='" + title + '\'' +
+                ", copies=" + copies +
+                "} " + super.toString();
     }
 }

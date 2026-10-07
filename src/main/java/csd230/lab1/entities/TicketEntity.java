@@ -8,25 +8,22 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("TICKET")
 public class TicketEntity extends ProductEntity {
     private String description;
-    @Column(name = "ticket_price")
-    private double price;
 
     public TicketEntity() {
     }
 
-    public TicketEntity(String d, double p) {
-        this.description = d;
-        this.price = p;
+    public TicketEntity(String description) {
+        this.description = description;
     }
 
     @Override
     public void sellItem() {
-        System.out.println("Selling Ticket: " + description + " for $" + price);
+        System.out.println("Selling Ticket: " + description + " for $" + super.getPrice());
     }
 
     @Override
     public double getPrice() {
-        return price;
+        return super.getPrice();
     }
 
     public String getDescription() {
@@ -38,11 +35,13 @@ public class TicketEntity extends ProductEntity {
     }
 
     public void setPrice(double p) {
-        this.price = p;
+        super.setPrice(p);
     }
 
     @Override
     public String toString() {
-        return "Ticket{desc='" + description + "', price=" + price + "}";
+        return "TicketEntity{" +
+                "description='" + description + '\'' +
+                "} " + super.toString();
     }
 }
