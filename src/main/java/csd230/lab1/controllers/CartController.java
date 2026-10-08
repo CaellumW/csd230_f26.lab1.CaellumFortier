@@ -29,7 +29,7 @@ public class CartController {
                     return cartRepository.save(newCart);
                 });
         model.addAttribute("cart", cart);
-        return "cartDetails";
+        return "cartView";
     }
 
     @GetMapping("/add/{bookId}")
