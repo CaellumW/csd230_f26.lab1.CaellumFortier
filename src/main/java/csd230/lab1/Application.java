@@ -2,7 +2,9 @@ package csd230.lab1;
 
 
 import csd230.lab1.entities.BookEntity;
+import csd230.lab1.entities.CartEntity;
 import csd230.lab1.repositories.BookEntityRepository;
+import csd230.lab1.repositories.CartEntityRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,11 +17,14 @@ public class Application implements CommandLineRunner {
 	}
 
 	private final BookEntityRepository bookRepository;
+	private final CartEntityRepository cartRepository;
 
 
-	public Application(BookEntityRepository bookRepository) {
+	public Application(BookEntityRepository bookRepository, CartEntityRepository cartRepository) {
 		this.bookRepository = bookRepository;
+		this.cartRepository = cartRepository;
 	}
+
 
 
 	public void run(String... args) {
@@ -42,8 +47,23 @@ public class Application implements CommandLineRunner {
 		second.setCopies(4);
 		second.setAuthor("Course Example");
 		bookRepository.save(second);
+
+		if (bookRepository.count() == 0) {
+			BookEntity book = new BookEntity();
+			book.setTitle("Spring MVC Basics");
+			book.setPrice(29.99);
+			book.setCopies(5);
+			book.setAuthor("Course Example");
+			bookRepository.save(book);
+		}
+
+
+		cartRepository.findById(1L)
+				.orElseGet(() -> cartRepository.save(new CartEntity()));
 	}
+
 }
+
 
 
 
