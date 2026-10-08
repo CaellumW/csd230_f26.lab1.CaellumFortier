@@ -69,8 +69,4 @@ public class CartEntity {
         return Objects.equals(id, that.id) && Objects.equals(products, that.products);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, products);
-    }
 }
