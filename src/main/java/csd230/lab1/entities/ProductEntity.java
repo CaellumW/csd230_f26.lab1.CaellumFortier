@@ -71,8 +71,4 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
         return Objects.equals(id, that.id) && Objects.equals(carts, that.carts);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, carts);
-    }
 }

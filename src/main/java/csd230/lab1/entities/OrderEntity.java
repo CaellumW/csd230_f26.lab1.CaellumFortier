@@ -75,11 +75,6 @@ public class OrderEntity extends PublicationEntity {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), products, id, totalAmount, orderDate);
-    }
-
-    @Override
     public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
