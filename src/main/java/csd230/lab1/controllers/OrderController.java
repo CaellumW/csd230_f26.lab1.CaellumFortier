@@ -63,7 +63,7 @@ public class OrderController {
         cartRepository.save(cart);
 
         model.addAttribute("order", order);
-        return "redirect:/order/" + order.getId();
+        return "redirect:/orders/" + order.getId();
     }
 
     @GetMapping("/{orderId}")
