@@ -3,8 +3,10 @@ package csd230.lab1;
 
 import csd230.lab1.entities.BookEntity;
 import csd230.lab1.entities.CartEntity;
+import csd230.lab1.entities.OrderEntity;
 import csd230.lab1.repositories.BookEntityRepository;
 import csd230.lab1.repositories.CartEntityRepository;
+import csd230.lab1.repositories.OrderEntityRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,11 +20,13 @@ public class Application implements CommandLineRunner {
 
 	private final BookEntityRepository bookRepository;
 	private final CartEntityRepository cartRepository;
+	private final OrderEntityRepository orderRepository;
 
 
-	public Application(BookEntityRepository bookRepository, CartEntityRepository cartRepository) {
+	public Application(BookEntityRepository bookRepository, CartEntityRepository cartRepository, OrderEntityRepository orderRepository) {
 		this.bookRepository = bookRepository;
 		this.cartRepository = cartRepository;
+		this.orderRepository = orderRepository;
 	}
 
 
@@ -60,6 +64,8 @@ public class Application implements CommandLineRunner {
 
 		cartRepository.findById(1L)
 				.orElseGet(() -> cartRepository.save(new CartEntity()));
+
+
 	}
 
 }

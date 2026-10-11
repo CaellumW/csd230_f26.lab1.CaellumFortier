@@ -62,11 +62,11 @@ public class CartEntity {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        CartEntity that = (CartEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(products, that.products);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        CartEntity that = (CartEntity) o;
+//        return Objects.equals(id, that.id) && Objects.equals(products, that.products);
+//    }
 
 }

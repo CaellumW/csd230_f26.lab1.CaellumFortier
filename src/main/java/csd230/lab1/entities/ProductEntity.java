@@ -64,11 +64,11 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
         return "ProductEntity{id=" + id + "} : " + super.toString();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductEntity that = (ProductEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(carts, that.carts);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ProductEntity that = (ProductEntity) o;
+//        return Objects.equals(id, that.id) && Objects.equals(carts, that.carts);
+//    }
 
 }
