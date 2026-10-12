@@ -1,5 +1,6 @@
 package csd230.lab1.config;
 import csd230.lab1.services.CustomUserDetailsService;
+import csd230.lab1.services.UserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,10 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
 
-    private final CustomUserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
 
-    public WebSecurityConfig(CustomUserDetailsService userDetailsService) {
+    public WebSecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -70,6 +71,7 @@ public class WebSecurityConfig {
         // FIX: Pass userDetailsService to the constructor
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
+
         return authProvider;
     }
 }
