@@ -9,7 +9,8 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity @DiscriminatorValue("ORDER")
-public class OrderEntity extends PublicationEntity {
+@Table(name = "orders")
+public class OrderEntity{
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -24,7 +25,9 @@ public class OrderEntity extends PublicationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private long id;
+    @Column(name = "amount")
     private double totalAmount;
+    @Column(name ="TimeStamp")
     private LocalDateTime orderDate;
 
 
@@ -32,20 +35,18 @@ public class OrderEntity extends PublicationEntity {
     public OrderEntity() {
     }
 
-    public OrderEntity(String t, double p, int c) {
-        super(t, p, c);
-    }
+//    public OrderEntity(String t, double p, int c) {
+//        super(t, p, c);
+//    }
 
     public Set<ProductEntity> getProducts() {
         return products;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }

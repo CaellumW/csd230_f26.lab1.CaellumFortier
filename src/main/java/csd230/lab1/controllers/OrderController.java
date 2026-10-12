@@ -40,6 +40,7 @@ public class OrderController {
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         OrderEntity order = new OrderEntity();
+//        order.setId(1L); --> Apparently unnecessary, ID will autogenerate
         double total = 0.0;
         Iterator<ProductEntity> iterator = cart.getProducts().iterator();
 
