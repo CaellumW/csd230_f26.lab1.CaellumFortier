@@ -32,7 +32,7 @@ public class CartController {
         return "cartView";
     }
 
-    @GetMapping("/add/{bookId}") // WHY IS THIS REROUTING POORLY
+    @GetMapping("/add/{bookId}")
     public String addToCart(@PathVariable Long bookId) {
         Long defaultCartId = 1L;
         CartEntity cart = cartRepository.findById(defaultCartId).orElse(null);
@@ -41,7 +41,7 @@ public class CartController {
             cart.addProduct(book);
             cartRepository.save(cart);
         }
-        return "redirect:/books"; // should be going back to books??
+        return "redirect:/books";
     }
 
 
