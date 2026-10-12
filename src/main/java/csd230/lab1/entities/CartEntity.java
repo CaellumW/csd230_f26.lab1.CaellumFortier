@@ -6,6 +6,10 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+
+
 @Entity
 @Table(name = "cart_entity")
 public class CartEntity {
@@ -13,6 +17,10 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
 
     public CartEntity() {
     }
@@ -30,6 +38,7 @@ public class CartEntity {
     )
     @Column(name = "products")
     private Set<ProductEntity> products = new LinkedHashSet<>();
+
 
     public void addProduct(ProductEntity product) {
         this.products.add(product);
@@ -54,6 +63,14 @@ public class CartEntity {
 
     public void setProducts(Set<ProductEntity> products) {
         this.products = products;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
 
