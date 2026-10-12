@@ -2,6 +2,7 @@ package csd230.lab1.repositories;
 
 import csd230.lab1.entities.CartEntity;
 import csd230.lab1.entities.ProductEntity;
+import csd230.lab1.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
 public interface CartEntityRepository extends JpaRepository<CartEntity, Long> {
 
     List<ProductEntity> listProducts();
+    CartEntity findByUser(UserEntity user);
 }
