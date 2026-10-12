@@ -21,15 +21,12 @@ public class RegisterController {
     }
     @PostMapping("/register")
     public String registerUser(@ModelAttribute UserEntity user) {
-        // 1. Encode the password! Do not save plain text.
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // 2. Set default role
         user.setRole("USER");
 
-        // 3. Save to DB
         userRepository.save(user);
-        // 4. Redirect to login
+
         return "redirect:/login";
     }
 }

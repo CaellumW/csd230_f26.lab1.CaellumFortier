@@ -62,8 +62,6 @@ public class Application implements CommandLineRunner {
 				fakeBook.author());
 		;
 
-
-		// --- START NEW CODE ---
 		csd230.lab1.entities.MagazineEntity magazine = new csd230.lab1.entities.MagazineEntity(
 				faker.lorem().word() + " Magazine",
 				12.99,
@@ -72,25 +70,14 @@ public class Application implements CommandLineRunner {
 				java.time.LocalDateTime.now()
 		);
 
-
 		CartEntity cart = new CartEntity();
 		cartRepository.save(cart);
-
-
-		// create a book
-		// add book to the cart
 		cart.addProduct(book);
-		// book.setCart(cart); // dont have to set cart because cart.addProduct() does it for you
 		cartRepository.save(cart);
 
 
 		cart.addProduct(magazine);
-		// magazine.setCart(cart);
 		cartRepository.save(cart);
-
-
-		// productRepository.save(book);
-
 
 		List<ProductEntity> allProducts = productRepository.findAll();
 

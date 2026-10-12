@@ -1,4 +1,5 @@
 package csd230.lab1.controllers;
+
 import csd230.lab1.entities.BookEntity;
 import csd230.lab1.entities.CartEntity;
 import csd230.lab1.repositories.BookEntityRepository;
@@ -15,33 +16,39 @@ public class BookController {
     private BookEntityRepository bookRepository;
     @Autowired
     private CartEntityRepository cartRepository;
+
     @GetMapping
     public String getAllBooks(Model model) {
         model.addAttribute("books", bookRepository.findAll());
         return "bookList"; // Looks for bookList.html in templates
     }
+
     @GetMapping("/{id}")
     public String getBookById(@PathVariable Long id, Model model) {
         BookEntity book = bookRepository.findById(id).orElse(null);
         model.addAttribute("book", book);
         return "bookDetails";
     }
+
     @GetMapping("/add")
     public String addBookForm(Model model) {
         model.addAttribute("book", new BookEntity());
         return "addBook";
     }
+
     @PostMapping("/add")
     public String addBook(@ModelAttribute BookEntity book) {
         bookRepository.save(book);
         return "redirect:/books";
     }
+
     @GetMapping("/edit/{id}")
     public String editBookForm(@PathVariable Long id, Model model) {
         BookEntity book = bookRepository.findById(id).orElse(null);
         model.addAttribute("book", book);
         return "editBook";
     }
+
     @PostMapping("/edit/{id}")
     public String editBook(@PathVariable Long id, @ModelAttribute BookEntity updatedBook) {
         BookEntity existingBook = bookRepository.findById(id).orElse(null);
@@ -54,6 +61,7 @@ public class BookController {
         }
         return "redirect:/books";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         BookEntity book = bookRepository.findById(id).orElse(null);

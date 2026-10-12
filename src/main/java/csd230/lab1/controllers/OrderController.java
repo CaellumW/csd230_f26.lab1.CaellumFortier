@@ -29,8 +29,6 @@ public class OrderController {
     @Autowired
     private PublicationEntityRepository publicationRepository;
 
-    List products = (List) cartRepository.listProducts();
-
     @GetMapping
     public String getAllCart(Model model) {
         model.addAttribute("cart", cartRepository.findAll());

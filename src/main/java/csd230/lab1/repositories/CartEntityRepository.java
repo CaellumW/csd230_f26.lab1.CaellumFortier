@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface CartEntityRepository extends JpaRepository<CartEntity, Long> {
 
-    List<ProductEntity> listProducts();
     CartEntity findByUser(UserEntity user);
 }
