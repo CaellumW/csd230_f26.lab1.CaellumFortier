@@ -32,7 +32,7 @@ public class CartController {
 
     private CartEntity getCartForCurrentUser(Principal principal) {
         String username = principal.getName();
-        UserEntity user = UserEntityRepository.findByUsername(username);
+        UserEntity user = userRepository.findByUsername(username);
         CartEntity cart = cartRepository.findByUser(user);
 
         if (cart == null) {

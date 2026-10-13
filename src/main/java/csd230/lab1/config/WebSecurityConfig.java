@@ -1,5 +1,4 @@
 package csd230.lab1.config;
-import csd230.lab1.services.CustomUserDetailsService;
 import csd230.lab1.services.UserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,11 +47,7 @@ public class WebSecurityConfig {
                         .permitAll()
                 );
 
-
-        // Required for H2 Console to work with Spring Security (it uses frames)
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
-
-        // Disable CSRF specifically for H2 Console
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
 
 
@@ -68,10 +63,9 @@ public class WebSecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        // FIX: Pass userDetailsService to the constructor
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
+
 }
