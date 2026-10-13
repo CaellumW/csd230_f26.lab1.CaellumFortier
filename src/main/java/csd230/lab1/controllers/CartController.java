@@ -47,7 +47,7 @@ public class CartController {
     public String viewCart(Model model, Principal principal) {
         CartEntity cart = getCartForCurrentUser(principal);
         model.addAttribute("cart", cart);
-        return "cartDetails";
+        return "cartView";
     }
 
     @GetMapping("/add/{bookId}")
