@@ -73,9 +73,6 @@ public class CartController {
         return "redirect:/cart";
     }
 
-
-//    am i supposed to have checkout logic here? that's in my order controller
-
     @PostMapping("/checkout")
     public String checkout(Principal principal) {
 
