@@ -1,11 +1,15 @@
 package csd230.lab1;
 
+
 import com.github.javafaker.Commerce;
 import com.github.javafaker.Faker;
 import csd230.lab1.entities.BookEntity;
 import csd230.lab1.entities.CartEntity;
 import csd230.lab1.entities.ProductEntity;
 import csd230.lab1.entities.UserEntity;
+import csd230.lab1.pojos.Cart;
+import csd230.lab1.pojos.Magazine;
+import csd230.lab1.pojos.Product;
 import csd230.lab1.repositories.CartEntityRepository;
 import csd230.lab1.repositories.ProductEntityRepository;
 import csd230.lab1.repositories.UserEntityRepository;
@@ -15,7 +19,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootApplication
@@ -60,9 +66,10 @@ public class Application implements CommandLineRunner {
 				Double.parseDouble(priceString),
 				10,
 				fakeBook.author());
-		;
 
-		csd230.lab1.entities.MagazineEntity magazine = new csd230.lab1.entities.MagazineEntity(
+
+		// --- START NEW CODE ---
+		csd230.lab1.entities.MagazineEntity magazine = new csd230.lab1.entities.MagazineEntity( // not showing up in booklist, not supposed to?
 				faker.lorem().word() + " Magazine",
 				12.99,
 				20,
@@ -70,14 +77,29 @@ public class Application implements CommandLineRunner {
 				java.time.LocalDateTime.now()
 		);
 
+
 		CartEntity cart = new CartEntity();
 		cartRepository.save(cart);
+
+
+		// create a book
+		// add book to the cart
 		cart.addProduct(book);
+		// book.setCart(cart); // dont have to set cart because cart.addProduct() does it for you
 		cartRepository.save(cart);
 
 
 		cart.addProduct(magazine);
+		// magazine.setCart(cart);
 		cartRepository.save(cart);
+
+
+
+
+		// productRepository.save(book);
+
+
+
 
 		List<ProductEntity> allProducts = productRepository.findAll();
 
@@ -116,11 +138,6 @@ public class Application implements CommandLineRunner {
 
 
 }
-
-
-
-
-
 
 
 
