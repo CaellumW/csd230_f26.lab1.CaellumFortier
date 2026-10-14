@@ -63,9 +63,10 @@ public class Application implements CommandLineRunner {
 
 		BookEntity book = new BookEntity(
 				fakeBook.title(),
+				fakeBook.author(),
 				Double.parseDouble(priceString),
-				10,
-				fakeBook.author());
+				10)
+				;
 
 
 		// --- START NEW CODE ---

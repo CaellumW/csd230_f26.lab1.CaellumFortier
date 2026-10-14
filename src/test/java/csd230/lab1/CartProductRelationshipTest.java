@@ -25,8 +25,8 @@ public class CartProductRelationshipTest {
     @Test
     void testCartProductRelationship() {
 
-        BookEntity book1 = new BookEntity("Book One", 15.00, 10, "Author A");
-        BookEntity book2 = new BookEntity("Book Two", 20.00, 5, "Author B");
+        BookEntity book1 = new BookEntity("Book One", "Author A", 15.00, 10);
+        BookEntity book2 = new BookEntity("Book Two", "Author B", 20.00, 5);
 
         productRepo.save(book1);
         productRepo.save(book2);

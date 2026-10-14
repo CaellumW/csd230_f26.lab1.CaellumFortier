@@ -17,7 +17,7 @@ public class ProductEntityRepositoryCrudTest {
     @Test
     void testCrudOperations() {
         // create - C
-        BookEntity book = new BookEntity("Test Book", 19.99, 5, "Author");
+        BookEntity book = new BookEntity("Test Book", "Author", 19.99, 5);
         productRepo.save(book);
 
         assertThat(book.getId()).isNotNull();
