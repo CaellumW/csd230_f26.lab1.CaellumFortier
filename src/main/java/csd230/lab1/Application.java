@@ -58,7 +58,7 @@ public class Application implements CommandLineRunner {
 		com.github.javafaker.Book fakeBook = faker.book();
 		String name = cm.productName();
 		String description = cm.material();
-		String priceString = faker.commerce().price();
+		String priceString = "32";
 
 
 		BookEntity book = new BookEntity(
