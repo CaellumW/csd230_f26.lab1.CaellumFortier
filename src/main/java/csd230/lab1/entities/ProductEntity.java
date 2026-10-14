@@ -16,7 +16,9 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "Name")
     private String name;
+    @Column(name = "price")
     private double price;
 
     @ManyToMany(mappedBy = "products")

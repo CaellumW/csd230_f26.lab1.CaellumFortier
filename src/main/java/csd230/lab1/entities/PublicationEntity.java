@@ -5,8 +5,9 @@ import jakarta.persistence.Entity;
 
 @Entity
 public abstract class PublicationEntity extends ProductEntity {
+    @Column(name = "title")
     private String title;
-    @Column(name = "pub_price") private double price;
+    @Column(name = "copies")
     private int copies;
 
     public PublicationEntity() {
@@ -39,7 +40,9 @@ public abstract class PublicationEntity extends ProductEntity {
     public int getCopies() {
         return copies;
     }
-    @Override public double getPrice() { return price; }
+    @Override public double getPrice() {
+        return super.getPrice();
+    }
 
     public void setCopies(int c) {
         this.copies = c;

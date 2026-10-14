@@ -38,6 +38,7 @@ public class BookController {
 
     @PostMapping("/add")
     public String addBook(@ModelAttribute BookEntity book) {
+        System.out.println("Price received: " + book.getPrice()); // temp code for testing
         bookRepository.save(book);
         return "redirect:/books";
     }
@@ -53,11 +54,12 @@ public class BookController {
     public String editBook(@PathVariable Long id, @ModelAttribute BookEntity updatedBook) {
         BookEntity existingBook = bookRepository.findById(id).orElse(null);
         if (existingBook != null) {
-            existingBook.setAuthor(updatedBook.getAuthor());
             existingBook.setTitle(updatedBook.getTitle());
+            existingBook.setAuthor(updatedBook.getAuthor());
             existingBook.setPrice(updatedBook.getPrice());
             existingBook.setCopies(updatedBook.getCopies());
             bookRepository.save(existingBook);
+            System.out.println("Updated price: " + existingBook.getPrice()); // temp line for testing - should show new price
         }
         return "redirect:/books";
     }
