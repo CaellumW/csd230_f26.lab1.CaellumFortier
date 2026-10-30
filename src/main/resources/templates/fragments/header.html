@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <body>
+
+<header th:fragment="header"
+        class="bg-rose-500 shadow-lg">
+
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+    <a th:href="@{/books}"
+       class="text-3xl font-bold text-white">
+      🍓 Strawberry Books 🍓
+    </a>
+
+    <nav class="flex items-center gap-4">
+
+      <a th:href="@{/books}"
+         class="text-white hover:text-rose-100">
+        Books
+      </a>
+
+      <a th:href="@{/cart}"
+         class="bg-green-500 hover:bg-green-600
+                      text-white px-4 py-2
+                      rounded-xl transition">
+        🛒 Cart 🛒
+      </a>
+
+      <span class="text-white">
+                <span sec:authentication="name"></span>
+            </span>
+
+      <form th:action="@{/logout}" method="post">
+
+        <button type="submit"
+                class="bg-white text-rose-600
+                               px-4 py-2 rounded-xl
+                               hover:bg-rose-100 transition">
+          Sign Out
+        </button>
+
+      </form>
+
+    </nav>
+
+  </div>
+
+</header>
 
 </body>
 </html>
