@@ -1,10 +1,8 @@
 package csd230.lab1.controllers;
 import csd230.lab1.entities.BookEntity;
 import csd230.lab1.repositories.BookEntityRepository;
-import csd230.lab1.repositories.CartEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +12,6 @@ import java.util.Optional;
 public class BookRestController {
     @Autowired
     private BookEntityRepository bookRepository;
-//    @Autowired
-//    private CartEntityRepository cartRepository;
 
     @GetMapping
     public List<BookEntity> getAllBooks() {
@@ -23,17 +19,14 @@ public class BookRestController {
     }
 
     @GetMapping("/{id}")
-    public Optional<BookEntity> getBookById(@PathVariable Long id) {
-        return bookRepository.findById(id);
+    public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) {
+        return bookRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-//    @GetMapping("/add")
-//    public Model addBookForm(Model model) {
-//        return model.addAttribute("book", new BookEntity());
-//    }
-
     @PostMapping("/add")
-    public BookEntity addBook(@ModelAttribute BookEntity book) {
+    public BookEntity addBook(@RequestBody BookEntity book) {
         return bookRepository.save(book);
     }
 
@@ -46,6 +39,8 @@ public class BookRestController {
                 .map(book -> {
                     book.setTitle(updatedBook.getTitle());
                     book.setPrice(updatedBook.getPrice());
+                    book.setAuthor(updatedBook.getAuthor());
+                    book.setCopies(updatedBook.getCopies());
                     return ResponseEntity.ok(bookRepository.save(book));
                 })
                 .orElse(ResponseEntity.notFound().build());
