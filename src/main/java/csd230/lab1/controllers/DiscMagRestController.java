@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/discmag")
+@Tag(name = "DiscMags", description = "Operations for managing discmags! =)")
 public class DiscMagRestController {
     @Autowired
     private DiscMagEntityRepository discMagRepository;

@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/orders")
+@Tag(name = "Orders", description = "Operations for managing orders! =)")
 public class OrderRestController {
     @Autowired
     private OrderEntityRepository orderRepository;

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/tickets")
+@Tag(name = "Tickets", description = "Operations for managing tickets! =)")
 public class TicketRestController {
     @Autowired
     private TicketEntityRepository ticketRepo;

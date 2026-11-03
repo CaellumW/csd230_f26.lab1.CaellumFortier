@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/cart")
+@Tag(name = "Carts", description = "Operations for managing carts! =)")
 public class CartRestController {
     @Autowired
     private CartEntityRepository cartRepository;

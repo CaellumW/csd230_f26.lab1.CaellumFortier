@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/products")
+@Tag(name = "Products", description = "Operations for managing products! =)")
 public class ProductRestController {
     @Autowired
     private ProductEntityRepository productRepo;

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/publications")
+@Tag(name = "Publications", description = "Operations for managing publications! =)")
 public class PublicationRestController {
     @Autowired
     private PublicationEntityRepository publicationRepo;

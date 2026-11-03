@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/users")
+@Tag(name = "Users", description = "Operations for managing users! =)")
 public class UserRestController {
     @Autowired
     private UserEntityRepository userRepo;

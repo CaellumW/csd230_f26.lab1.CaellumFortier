@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api/rest/magazines")
+@Tag(name = "Magazines", description = "Operations for managing magazines! =)")
 public class MagazineRestController {
     @Autowired
     private MagazineEntityRepository magazineRepository;
