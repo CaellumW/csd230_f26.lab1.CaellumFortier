@@ -30,7 +30,7 @@ public class BookRestController {
     @Operation(description = "Finds a specific book by its ID")
     @ApiResponse(responseCode = "200", description = "Book found!")
     @ApiResponse(responseCode = "404", description = "Book not found")
-    public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) throws BookNotFoundException {
+    public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) {
         return bookRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new BookNotFoundException(id));
@@ -48,7 +48,7 @@ public class BookRestController {
     @ApiResponse(responseCode = "200", description = "Book successfully updates")
     public ResponseEntity<BookEntity> updateBook(
             @PathVariable Long id,
-            @RequestBody BookEntity updatedBook) throws BookNotFoundException {
+            @RequestBody BookEntity updatedBook) {
 
         return bookRepository.findById(id)
                 .map(book -> {
@@ -64,7 +64,7 @@ public class BookRestController {
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a specific book using its ID")
     @ApiResponse(responseCode = "200", description = "Book deleted.")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) throws BookNotFoundException {
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         if (!bookRepository.existsById(id)) {
             throw new BookNotFoundException(id);
         }
