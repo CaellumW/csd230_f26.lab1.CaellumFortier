@@ -29,7 +29,7 @@ public class DiscMagRestController {
     public ResponseEntity<DiscMagEntity> getDiscMagById(@PathVariable Long id) {
         return discMagRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new DiscMagNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -55,7 +55,7 @@ public class DiscMagRestController {
                     discMag.setTitle(updatedDiscMag.getTitle());
                     return ResponseEntity.ok(discMagRepository.save(discMag));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new DiscMagNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -63,7 +63,7 @@ public class DiscMagRestController {
     @ApiResponse(responseCode = "200", description = "Discmag deleted.")
     public ResponseEntity<Void> deleteDiscMag(@PathVariable Long id) {
         if (!discMagRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new DiscMagNotFoundException(id);
         }
 
         discMagRepository.deleteById(id);

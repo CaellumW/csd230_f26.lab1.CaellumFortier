@@ -32,7 +32,7 @@ public class ProductRestController {
     public ResponseEntity<ProductEntity> getOrderById(@PathVariable Long id) {
         return productRepo.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -55,7 +55,7 @@ public class ProductRestController {
                     product.setPrice(updatedProduct.getPrice());
                     return ResponseEntity.ok(productRepo.save(product));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")

@@ -43,7 +43,7 @@ public class CartRestController {
     @ApiResponse(responseCode = "200", description = "Book added to cart")
     public CartEntity addToCart(@PathVariable Long bookId, Principal principal) {
         CartEntity cart = getCartForCurrentUser(principal);
-        BookEntity book = bookRepository.findById(bookId).orElse(null);
+        BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
         if (book != null) {
             cart.addProduct(book);
             return cartRepository.save(cart);
@@ -56,7 +56,7 @@ public class CartRestController {
     @ApiResponse(responseCode = "200", description = "Book deleted")
     public CartEntity removeFromCart(@PathVariable Long bookId, Principal principal) {
         CartEntity cart = getCartForCurrentUser(principal);
-        BookEntity book = bookRepository.findById(bookId).orElse(null);
+        BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
 
         if (book != null) {
             cart.getProducts().remove(book);
@@ -72,7 +72,7 @@ public class CartRestController {
 
         CartEntity cart = getCartForCurrentUser(principal);
         if (cart == null) {
-            throw new RuntimeException("Cart not found for user"); // EXCEPTION
+            throw new CartNotFoundException();
         }
         OrderEntity order = new OrderEntity();
         double total = 0.0;

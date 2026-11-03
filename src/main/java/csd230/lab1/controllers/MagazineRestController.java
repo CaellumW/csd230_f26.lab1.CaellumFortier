@@ -30,7 +30,7 @@ public class MagazineRestController {
     public ResponseEntity<MagazineEntity> getMagazineById(@PathVariable Long id) {
         return magazineRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new MagazineNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -55,7 +55,7 @@ public class MagazineRestController {
                     magazine.setPrice(updatedMagazine.getPrice());
                     return ResponseEntity.ok(magazineRepository.save(magazine));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new MagazineNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -63,7 +63,7 @@ public class MagazineRestController {
     @ApiResponse(responseCode = "200", description = "Magazine deleted")
     public ResponseEntity<Void> deleteMagazine(@PathVariable Long id) {
         if (!magazineRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new MagazineNotFoundException(id);
         }
 
         magazineRepository.deleteById(id);

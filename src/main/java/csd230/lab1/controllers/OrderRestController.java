@@ -39,7 +39,7 @@ public class OrderRestController {
     public ResponseEntity<OrderEntity> getOrderById(@PathVariable Long id) {
         return orderRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -62,7 +62,7 @@ public class OrderRestController {
                     order.setTotalAmount(updatedOrder.getTotalAmount());
                     return ResponseEntity.ok(orderRepository.save(order));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -70,7 +70,7 @@ public class OrderRestController {
     @ApiResponse(responseCode = "200", description = "Order deleted")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         if (!orderRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new OrderNotFoundException(id);
         }
 
         orderRepository.deleteById(id);
