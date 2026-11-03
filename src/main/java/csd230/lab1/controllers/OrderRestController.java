@@ -28,12 +28,14 @@ public class OrderRestController {
 
     @GetMapping("/")
     @Operation(description = "Retrieves all orders")
+    @ApiResponse(responseCode = "200", description = "All orders found")
     public List<OrderEntity> getAllOrders() {
         return orderRepository.findAll();
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Retrieves a specific order via the order's ID")
+    @ApiResponse(responseCode = "200", description = "Order found")
     public ResponseEntity<OrderEntity> getOrderById(@PathVariable Long id) {
         return orderRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -42,12 +44,14 @@ public class OrderRestController {
 
     @PostMapping("/add")
     @Operation(description = "Adds a new order to the order repository")
+    @ApiResponse(responseCode = "200", description = "Order added")
     public OrderEntity addOrder(@RequestBody OrderEntity order) {
         return orderRepository.save(order);
     }
 
     @PutMapping("/{id}")
     @Operation(description = "Updates an existing order with new information")
+    @ApiResponse(responseCode = "200", description = "Order updated")
     public ResponseEntity<OrderEntity> updateOrder(
             @PathVariable Long id,
             @RequestBody OrderEntity updatedOrder) {
@@ -63,6 +67,7 @@ public class OrderRestController {
 
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a specific order via the order's ID")
+    @ApiResponse(responseCode = "200", description = "Order deleted")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         if (!orderRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
