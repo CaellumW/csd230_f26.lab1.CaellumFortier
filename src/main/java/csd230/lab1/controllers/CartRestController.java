@@ -40,6 +40,7 @@ public class CartRestController {
 
     @PutMapping("/PUT/{bookId}")
     @Operation(description = "Adds a book to the cart by the book's ID")
+    @ApiResponse(responseCode = "200", description = "Book added to cart")
     public CartEntity addToCart(@PathVariable Long bookId, Principal principal) {
         CartEntity cart = getCartForCurrentUser(principal);
         BookEntity book = bookRepository.findById(bookId).orElse(null);
@@ -52,6 +53,7 @@ public class CartRestController {
 
     @DeleteMapping("/DELETE/{bookId}")
     @Operation(description = "Deletes a book from the cart by the book's ID")
+    @ApiResponse(responseCode = "200", description = "Book deleted")
     public CartEntity removeFromCart(@PathVariable Long bookId, Principal principal) {
         CartEntity cart = getCartForCurrentUser(principal);
         BookEntity book = bookRepository.findById(bookId).orElse(null);
@@ -65,6 +67,7 @@ public class CartRestController {
 
     @PostMapping("/checkout")
     @Operation(description = "Turns the existing cart into an order")
+    @ApiResponse(responseCode = "200", description = "Checkout successful")
     public Long checkout(Principal principal) {
 
         CartEntity cart = getCartForCurrentUser(principal);
