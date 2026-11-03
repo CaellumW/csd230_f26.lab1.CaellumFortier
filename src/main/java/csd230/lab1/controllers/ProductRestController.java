@@ -20,11 +20,13 @@ public class ProductRestController {
     private ProductEntityRepository productRepo;
 
     @GetMapping("/")
+    @Operation(description = "Retrieves all products")
     public List<ProductEntity> getAllProducts() {
         return productRepo.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Retrieves a specific product via that product's ID")
     public ResponseEntity<ProductEntity> getOrderById(@PathVariable Long id) {
         return productRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,11 +34,13 @@ public class ProductRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Adds a new product to the product repository")
     public ProductEntity addProduct(@RequestBody ProductEntity product) {
         return productRepo.save(product);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates an existing product with new product information")
     public ResponseEntity<ProductEntity> updateProduct(
             @PathVariable Long id,
             @RequestBody ProductEntity updatedProduct) {
@@ -51,6 +55,7 @@ public class ProductRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a specific product via that product's ID")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         if (!productRepo.existsById(id)) {
             return ResponseEntity.notFound().build();

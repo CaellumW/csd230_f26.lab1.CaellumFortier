@@ -19,11 +19,13 @@ public class BookRestController {
     private BookEntityRepository bookRepository;
 
     @GetMapping
+    @Operation(description = "Retrieves all books")
     public List<BookEntity> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Finds a specific book by its ID")
     public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) {
         return bookRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -31,11 +33,13 @@ public class BookRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Adds a *pre made* book object")
     public BookEntity addBook(@RequestBody BookEntity book) {
         return bookRepository.save(book);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates and existing book with new information")
     public ResponseEntity<BookEntity> updateBook(
             @PathVariable Long id,
             @RequestBody BookEntity updatedBook) {
@@ -52,6 +56,7 @@ public class BookRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a specific book using its ID")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         if (!bookRepository.existsById(id)) {
             return ResponseEntity.notFound().build();

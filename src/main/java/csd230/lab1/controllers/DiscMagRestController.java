@@ -17,11 +17,13 @@ public class DiscMagRestController {
     private DiscMagEntityRepository discMagRepository;
 
     @GetMapping("/")
+    @Operation(description = "Retrieves all discmags")
     public List<DiscMagEntity> getAllDiscMags() {
         return discMagRepository.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Retrieves a discmag by its ID")
     public ResponseEntity<DiscMagEntity> getDiscMagById(@PathVariable Long id) {
         return discMagRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -29,11 +31,13 @@ public class DiscMagRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Adds a discmag to the discmag repository")
     public DiscMagEntity addDiscMag(@RequestBody DiscMagEntity discMag) {
         return discMagRepository.save(discMag);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates an existing discmag with new information")
     public ResponseEntity<DiscMagEntity> updateDiscMag(
             @PathVariable Long id,
             @RequestBody DiscMagEntity updatedDiscMag) {
@@ -51,6 +55,7 @@ public class DiscMagRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a discmag by its ID")
     public ResponseEntity<Void> deleteDiscMag(@PathVariable Long id) {
         if (!discMagRepository.existsById(id)) {
             return ResponseEntity.notFound().build();

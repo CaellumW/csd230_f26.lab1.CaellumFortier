@@ -18,11 +18,13 @@ public class MagazineRestController {
     private MagazineEntityRepository magazineRepository;
 
     @GetMapping("/")
+    @Operation(description = "Lists all of the magazines")
     public List<MagazineEntity> getAllMags() {
         return magazineRepository.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Gets a specific magazine by its ID")
     public ResponseEntity<MagazineEntity> getMagazineById(@PathVariable Long id) {
         return magazineRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -30,11 +32,13 @@ public class MagazineRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Saves a new magazine to the magazine repository")
     public MagazineEntity addMagazine(@RequestBody MagazineEntity magazine) {
         return magazineRepository.save(magazine);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates an existing magazine with new information")
     public ResponseEntity<MagazineEntity> updateMagazine(
             @PathVariable Long id,
             @RequestBody MagazineEntity updatedMagazine) {
@@ -51,6 +55,7 @@ public class MagazineRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a specific magazine by its ID")
     public ResponseEntity<Void> deleteMagazine(@PathVariable Long id) {
         if (!magazineRepository.existsById(id)) {
             return ResponseEntity.notFound().build();

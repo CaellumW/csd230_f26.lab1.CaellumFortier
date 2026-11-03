@@ -20,11 +20,13 @@ public class PublicationRestController {
     private PublicationEntityRepository publicationRepo;
 
     @GetMapping("/")
+    @Operation(description = "Retrieves all publications")
     public List<PublicationEntity> getAllPublicataions() {
         return publicationRepo.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Retrieves a specific publication by its ID")
     public ResponseEntity<PublicationEntity> getPublicationById(@PathVariable Long id) {
         return publicationRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,11 +34,13 @@ public class PublicationRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Adds a new publication to the publication repository")
     public PublicationEntity addPublication(@RequestBody PublicationEntity publication) {
         return publicationRepo.save(publication);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates an existing publication with new information")
     public ResponseEntity<PublicationEntity> updatePublication(
             @PathVariable Long id,
             @RequestBody PublicationEntity updatedPublication) {
@@ -51,6 +55,7 @@ public class PublicationRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a publication via its ID")
     public ResponseEntity<Void> deletePublication(@PathVariable Long id) {
         if (!publicationRepo.existsById(id)) {
             return ResponseEntity.notFound().build();

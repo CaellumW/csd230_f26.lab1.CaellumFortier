@@ -20,11 +20,13 @@ public class TicketRestController {
     private TicketEntityRepository ticketRepo;
 
     @GetMapping("/")
+    @Operation(description = "Retrieves all tickets")
     public List<TicketEntity> getAllTickets() {
         return ticketRepo.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Retrieves a specific ticket by its ID")
     public ResponseEntity<TicketEntity> getTicketById(@PathVariable Long id) {
         return ticketRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,11 +34,13 @@ public class TicketRestController {
     }
 
     @PostMapping("/add")
+    @Operation(description = "Adds a new ticket to the ticket repository")
     public TicketEntity addTicket(@RequestBody TicketEntity ticket) {
         return ticketRepo.save(ticket);
     }
 
     @PutMapping("/{id}")
+    @Operation(description = "Updates an existing ticket with new information")
     public ResponseEntity<TicketEntity> updateTicket(
             @PathVariable Long id,
             @RequestBody TicketEntity updatedTicket) {
@@ -51,6 +55,7 @@ public class TicketRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Deletes a specific ticket by its ID")
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
         if (!ticketRepo.existsById(id)) {
             return ResponseEntity.notFound().build();
