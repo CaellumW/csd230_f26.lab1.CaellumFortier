@@ -6,7 +6,6 @@ import csd230.lab1.entities.ProductEntity;
 import csd230.lab1.entities.PublicationEntity;
 import csd230.lab1.repositories.CartEntityRepository;
 import csd230.lab1.repositories.OrderEntityRepository;
-import csd230.lab1.repositories.ProductEntityRepository;
 import csd230.lab1.repositories.PublicationEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
