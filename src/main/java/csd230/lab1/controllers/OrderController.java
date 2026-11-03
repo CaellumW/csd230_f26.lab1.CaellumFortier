@@ -8,13 +8,11 @@ import csd230.lab1.repositories.CartEntityRepository;
 import csd230.lab1.repositories.OrderEntityRepository;
 import csd230.lab1.repositories.ProductEntityRepository;
 import csd230.lab1.repositories.PublicationEntityRepository;
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Iterator;
-import java.security.Principal;
 
 
 @Controller
@@ -24,8 +22,6 @@ public class OrderController {
     private OrderEntityRepository orderRepository;
     @Autowired
     private CartEntityRepository cartRepository;
-    @Autowired
-    private ProductEntityRepository productRepository;
     @Autowired
     private PublicationEntityRepository publicationRepository;
 
