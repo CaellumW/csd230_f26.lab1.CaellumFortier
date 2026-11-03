@@ -18,12 +18,14 @@ public class DiscMagRestController {
 
     @GetMapping("/")
     @Operation(description = "Retrieves all discmags")
+    @ApiResponse(responseCode = "200", description = "All discmags found")
     public List<DiscMagEntity> getAllDiscMags() {
         return discMagRepository.findAll();
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Retrieves a discmag by its ID")
+    @ApiResponse(responseCode = "200", description = "Discmag found")
     public ResponseEntity<DiscMagEntity> getDiscMagById(@PathVariable Long id) {
         return discMagRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,12 +34,14 @@ public class DiscMagRestController {
 
     @PostMapping("/add")
     @Operation(description = "Adds a discmag to the discmag repository")
+    @ApiResponse(responseCode = "200", description = "Discmag added")
     public DiscMagEntity addDiscMag(@RequestBody DiscMagEntity discMag) {
         return discMagRepository.save(discMag);
     }
 
     @PutMapping("/{id}")
     @Operation(description = "Updates an existing discmag with new information")
+    @ApiResponse(responseCode = "200", description = "Discmag updated")
     public ResponseEntity<DiscMagEntity> updateDiscMag(
             @PathVariable Long id,
             @RequestBody DiscMagEntity updatedDiscMag) {
@@ -56,6 +60,7 @@ public class DiscMagRestController {
 
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a discmag by its ID")
+    @ApiResponse(responseCode = "200", description = "Discmag deleted.")
     public ResponseEntity<Void> deleteDiscMag(@PathVariable Long id) {
         if (!discMagRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
