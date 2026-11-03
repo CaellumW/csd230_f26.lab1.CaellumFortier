@@ -1,6 +1,7 @@
 package csd230.lab1.controllers;
 import csd230.lab1.entities.BookEntity;
 import csd230.lab1.repositories.BookEntityRepository;
+import csd230.lab1.controllers.BookNotFoundException.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,10 @@ public class BookRestController {
     @Operation(description = "Finds a specific book by its ID")
     @ApiResponse(responseCode = "200", description = "Book found!")
     @ApiResponse(responseCode = "404", description = "Book not found")
-    public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookEntity> getBookById(@PathVariable Long id) throws BookNotFoundException {
         return bookRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -47,7 +48,7 @@ public class BookRestController {
     @ApiResponse(responseCode = "200", description = "Book successfully updates")
     public ResponseEntity<BookEntity> updateBook(
             @PathVariable Long id,
-            @RequestBody BookEntity updatedBook) {
+            @RequestBody BookEntity updatedBook) throws BookNotFoundException {
 
         return bookRepository.findById(id)
                 .map(book -> {
@@ -57,15 +58,15 @@ public class BookRestController {
                     book.setCopies(updatedBook.getCopies());
                     return ResponseEntity.ok(bookRepository.save(book));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a specific book using its ID")
     @ApiResponse(responseCode = "200", description = "Book deleted.")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) throws BookNotFoundException {
         if (!bookRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new BookNotFoundException(id);
         }
 
         bookRepository.deleteById(id);
