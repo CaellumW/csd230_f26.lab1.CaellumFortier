@@ -21,12 +21,14 @@ public class TicketRestController {
 
     @GetMapping("/")
     @Operation(description = "Retrieves all tickets")
+    @ApiResponse(responseCode = "200", description = "All tickets found")
     public List<TicketEntity> getAllTickets() {
         return ticketRepo.findAll();
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Retrieves a specific ticket by its ID")
+    @ApiResponse(responseCode = "200", description = "Ticket found")
     public ResponseEntity<TicketEntity> getTicketById(@PathVariable Long id) {
         return ticketRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -35,12 +37,14 @@ public class TicketRestController {
 
     @PostMapping("/add")
     @Operation(description = "Adds a new ticket to the ticket repository")
+    @ApiResponse(responseCode = "200", description = "Ticket added to the repository")
     public TicketEntity addTicket(@RequestBody TicketEntity ticket) {
         return ticketRepo.save(ticket);
     }
 
     @PutMapping("/{id}")
     @Operation(description = "Updates an existing ticket with new information")
+    @ApiResponse(responseCode = "200", description = "Ticket updated")
     public ResponseEntity<TicketEntity> updateTicket(
             @PathVariable Long id,
             @RequestBody TicketEntity updatedTicket) {
@@ -56,6 +60,7 @@ public class TicketRestController {
 
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a specific ticket by its ID")
+    @ApiResponse(responseCode = "200", description = "Ticket deleted")
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
         if (!ticketRepo.existsById(id)) {
             return ResponseEntity.notFound().build();
