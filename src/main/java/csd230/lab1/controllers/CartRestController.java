@@ -72,7 +72,7 @@ public class CartRestController {
 
         CartEntity cart = getCartForCurrentUser(principal);
         if (cart == null) {
-            throw new RuntimeException("Cart not found for user");
+            throw new RuntimeException("Cart not found for user"); // EXCEPTION
         }
         OrderEntity order = new OrderEntity();
         double total = 0.0;
