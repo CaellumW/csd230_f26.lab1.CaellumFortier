@@ -26,8 +26,6 @@ public class CartController {
     @Autowired
     private PublicationEntityRepository publicationRepository;
     @Autowired
-    private ProductEntityRepository productRepository;
-    @Autowired
     private OrderEntityRepository orderRepository;
 
     private CartEntity getCartForCurrentUser(Principal principal) {
