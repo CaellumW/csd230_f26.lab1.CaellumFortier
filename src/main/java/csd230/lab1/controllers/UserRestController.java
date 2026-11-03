@@ -22,12 +22,14 @@ public class UserRestController {
 
     @GetMapping("/")
     @Operation(description = "Retrieves all users")
+    @ApiResponse(responseCode = "200", description = "All users found")
     public List<UserEntity> getAllUsers() {
         return userRepo.findAll();
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Finds a specific user by their ID")
+    @ApiResponse(responseCode = "200", description = "User found")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
         return userRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -36,12 +38,14 @@ public class UserRestController {
 
     @PostMapping("/add")
     @Operation(description = "Adds a new user to the user repository")
+    @ApiResponse(responseCode = "200", description = "New user added")
     public UserEntity addUser(@RequestBody UserEntity user) {
         return userRepo.save(user);
     }
 
     @PutMapping("/{id}")
     @Operation(description = "Updates an existing user with new information")
+    @ApiResponse(responseCode = "200", description = "User updated")
     public ResponseEntity<UserEntity> updateUser(
             @PathVariable Long id,
             @RequestBody UserEntity updatedUser) {
@@ -57,6 +61,7 @@ public class UserRestController {
 
     @DeleteMapping("/{id}")
     @Operation(description = "Deletes a specific user by their ID")
+    @ApiResponse(responseCode = "200", description = "User deleted")
     public ResponseEntity<Void> deleteDiscMag(@PathVariable Long id) {
         if (!userRepo.existsById(id)) {
             return ResponseEntity.notFound().build();
