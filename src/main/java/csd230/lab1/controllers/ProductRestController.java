@@ -63,7 +63,7 @@ public class ProductRestController {
     @ApiResponse(responseCode = "200", description = "Product deleted")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         if (!productRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new ProductNotFoundException(id);
         }
 
         productRepo.deleteById(id);

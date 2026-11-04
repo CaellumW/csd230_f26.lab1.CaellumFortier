@@ -32,7 +32,7 @@ public class TicketRestController {
     public ResponseEntity<TicketEntity> getTicketById(@PathVariable Long id) {
         return ticketRepo.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -55,7 +55,7 @@ public class TicketRestController {
                     ticket.setPrice(updatedTicket.getPrice());
                     return ResponseEntity.ok(ticketRepo.save(ticket));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -63,7 +63,7 @@ public class TicketRestController {
     @ApiResponse(responseCode = "200", description = "Ticket deleted")
     public ResponseEntity<Void> deleteTicket(@PathVariable Long id) {
         if (!ticketRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new TicketNotFoundException(id);
         }
 
         ticketRepo.deleteById(id);

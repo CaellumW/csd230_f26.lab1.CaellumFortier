@@ -32,7 +32,7 @@ public class PublicationRestController {
     public ResponseEntity<PublicationEntity> getPublicationById(@PathVariable Long id) {
         return publicationRepo.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new PublicationNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -55,7 +55,7 @@ public class PublicationRestController {
                     publication.setTitle(updatedPublication.getTitle());
                     return ResponseEntity.ok(publicationRepo.save(publication));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new PublicationNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -63,7 +63,7 @@ public class PublicationRestController {
     @ApiResponse(responseCode = "200", description = "Publication deleted")
     public ResponseEntity<Void> deletePublication(@PathVariable Long id) {
         if (!publicationRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new PublicationNotFoundException(id);
         }
 
         publicationRepo.deleteById(id);

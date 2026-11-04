@@ -33,7 +33,7 @@ public class UserRestController {
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id) {
         return userRepo.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @PostMapping("/add")
@@ -56,7 +56,7 @@ public class UserRestController {
                     user.setUsername(updatedUser.getUsername());
                     return ResponseEntity.ok(userRepo.save(user));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +64,7 @@ public class UserRestController {
     @ApiResponse(responseCode = "200", description = "User deleted")
     public ResponseEntity<Void> deleteDiscMag(@PathVariable Long id) {
         if (!userRepo.existsById(id)) {
-            return ResponseEntity.notFound().build();
+            throw new UserNotFoundException(id);
         }
 
         userRepo.deleteById(id);
