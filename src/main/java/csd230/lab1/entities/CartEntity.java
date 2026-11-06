@@ -36,7 +36,7 @@ public class CartEntity {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    @Column(name = "products")
+//    @Column(name = "products") -> probably unnecessary
     private Set<ProductEntity> products = new LinkedHashSet<>();
 
 

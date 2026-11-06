@@ -1,5 +1,6 @@
 package csd230.lab1.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import csd230.lab1.pojos.SaleableItem;
 import jakarta.persistence.*;
 
@@ -21,6 +22,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @Column(name = "price")
     private double price;
 
+    @JsonIgnore //added to stop the infinite recursion
     @ManyToMany(mappedBy = "products")
     private Set<CartEntity> carts = new HashSet<>();
 

@@ -80,6 +80,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleGeneralException(
             Exception ex) {
         return ResponseEntity.status(500)
-                .body("Something went wrong");
+                .body(ex.getMessage());
     }
 }
