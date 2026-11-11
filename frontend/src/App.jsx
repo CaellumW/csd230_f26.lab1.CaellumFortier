@@ -24,9 +24,30 @@ export default function App() {
     setBooks(previous => [...previous, savedBook]);
   }
 
+  async function handleDeleteBook(id) {
+    if (!window.confirm('Delete this book?')) return;
+    setError('');
+    try {
+      const response = await fetch(`/api/rest/books/${id}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error(`Delete failed (${response.status})`);
+      setBooks(previous => previous.filter(book => book.id !== id));
+    } catch (err) { setError(err.message); }
+  }
+
+  async function handleUpdateBook(id, data) {
+    const response = await fetch(`/api/rest/books/${id}`, {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error(`Update failed (${response.status})`);
+    const savedBook = await response.json();
+    setBooks(previous => previous.map(book => book.id === id ? savedBook : book));
+  }
+
   return <main className="app-container">
     <h1>My Bookstore Frontend</h1>
     <AddBookForm onBookAdded={handleBookAdded} />
-    <BookList books={books} loading={loading} error={error} />
+    <BookList books={books} loading={loading} error={error}
+              onDelete={handleDeleteBook} onUpdate={handleUpdateBook} />
   </main>;
 }
