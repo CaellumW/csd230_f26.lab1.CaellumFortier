@@ -18,6 +18,15 @@ export default function MagazineList() {
             .finally(() => { if (active) setLoading(false); });
         return () => { active = false; };
     }, []);
+    async function handleDeleteMagazine(id) {
+        if (!window.confirm('Delete this magazine?')) return;
+        setError('');
+        try {
+            const res = await fetch(`/api/rest/magazines/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error(`Delete failed (${res.status})`);
+            setMagazines(previous => previous.filter(magazine => magazine.id !== id));
+        } catch (err) { setError(err.message); }
+    }
     async function handleUpdateMagazine(id, data) {
         const res = await fetch(`/api/rest/magazines/${id}`, {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
@@ -34,7 +43,7 @@ export default function MagazineList() {
         {error && <p role="alert">{error}</p>}
         {!loading && !error && magazines.length === 0 && <p>No magazines yet.</p>}
         <div className="magazine-list">
-            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} onUpdate={handleUpdateMagazine} />)}
+            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} onUpdate={handleUpdateMagazine} onDelete={handleDeleteMagazine} />)}
         </div>
     </section>;
 }

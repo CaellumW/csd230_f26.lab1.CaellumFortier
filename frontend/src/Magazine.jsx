@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Magazine({ id, title, price, copies, orderQty, currentIssue, onUpdate }) {
+export default function Magazine({ id, title, price, copies, orderQty, currentIssue, onUpdate, onDelete }) {
     const [isEditing, setIsEditing] = useState(false);
     const [draft, setDraft] = useState({ title, price, copies, orderQty, currentIssue });
     const [error, setError] = useState('');
@@ -37,5 +37,6 @@ export default function Magazine({ id, title, price, copies, orderQty, currentIs
         <p>Price: ${Number(price).toFixed(2)} | Copies: {copies} | Order Quantity: {orderQty}</p>
         <p>Current Issue: {currentIssue}</p>
         <button onClick={beginEdit}>Edit</button>
+        <button onClick={() => onDelete(id)}>Delete</button>
     </article>;
 }
