@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router';
+import NavBar from './NavBar.jsx';
+import Home from './Home.jsx';
 import AddBookForm from './AddBookForm.jsx';
 import BookList from './BookList.jsx';
 import './App.css';
 
 export default function App() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,6 +26,7 @@ export default function App() {
 
   function handleBookAdded(savedBook) {
     setBooks(previous => [...previous, savedBook]);
+    navigate('/inventory');
   }
 
   async function handleDeleteBook(id) {
@@ -46,8 +51,13 @@ export default function App() {
 
   return <main className="app-container">
     <h1>My Bookstore Frontend</h1>
-    <AddBookForm onBookAdded={handleBookAdded} />
-    <BookList books={books} loading={loading} error={error}
-              onDelete={handleDeleteBook} onUpdate={handleUpdateBook} />
+    <NavBar />
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/inventory" element={<BookList books={books} loading={loading} error={error}
+                                                  onDelete={handleDeleteBook} onUpdate={handleUpdateBook} />} />
+      <Route path="/add" element={<AddBookForm onBookAdded={handleBookAdded} />} />
+      <Route path="*" element={<h2>Page not found</h2>} />
+    </Routes>
   </main>;
 }
