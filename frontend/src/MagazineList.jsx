@@ -18,6 +18,15 @@ export default function MagazineList() {
             .finally(() => { if (active) setLoading(false); });
         return () => { active = false; };
     }, []);
+    async function handleUpdateMagazine(id, data) {
+        const res = await fetch(`/api/rest/magazines/${id}`, {
+            method: 'PUT', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error(`Update failed (${res.status})`);
+        const saved = await res.json();
+        setMagazines(previous => previous.map(magazine => magazine.id === id ? saved : magazine));
+    }
     return <section>
         <h1>Magazines</h1>
         <MagazineForm onMagazineAdded={saved => setMagazines(previous => [...previous, saved])} />
@@ -25,7 +34,7 @@ export default function MagazineList() {
         {error && <p role="alert">{error}</p>}
         {!loading && !error && magazines.length === 0 && <p>No magazines yet.</p>}
         <div className="magazine-list">
-            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} />)}
+            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} onUpdate={handleUpdateMagazine} />)}
         </div>
     </section>;
 }

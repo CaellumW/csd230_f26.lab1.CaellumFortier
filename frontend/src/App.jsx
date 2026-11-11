@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router';
 import NavBar from './NavBar.jsx';
 import Home from './Home.jsx';
+import MagazineList from './MagazineList.jsx';
 import AddBookForm from './AddBookForm.jsx';
 import BookList from './BookList.jsx';
 import './App.css';
@@ -57,6 +58,7 @@ export default function App() {
       <Route path="/inventory" element={<BookList books={books} loading={loading} error={error}
                                                   onDelete={handleDeleteBook} onUpdate={handleUpdateBook} />} />
       <Route path="/add" element={<AddBookForm onBookAdded={handleBookAdded} />} />
+      <Route path="/magazines" element={<MagazineList />} />
       <Route path="*" element={<h2>Page not found</h2>} />
     </Routes>
   </main>;
