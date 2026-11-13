@@ -3,14 +3,15 @@ package csd230.lab1.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Gel_polishes")
+@Table(name = "GEL_POLISHES")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class GelPolishEntity extends ProductEntity{
+public abstract class GelPolishEntity extends ProductEntity{
     @Column(name = "Stock")
     private int stock;
     @Column(name = "shade_name")
     private String shadeName;
-
+    @Column(name = "gel_type")
+    private String gelType;
 
     @Override
     public void sellItem() {
@@ -25,10 +26,10 @@ public class GelPolishEntity extends ProductEntity{
     public GelPolishEntity() {
     }
 
-    public GelPolishEntity(int stock, double price, String shadeName) {
+    public GelPolishEntity(int stock, String shadeName, String gelType) {
         this.stock = stock;
-        super.setPrice(price);
         this.shadeName = shadeName;
+        this.gelType = gelType;
     }
 
     public int getStock() {
@@ -45,6 +46,14 @@ public class GelPolishEntity extends ProductEntity{
 
     public void setShadeName(String shadeName) {
         this.shadeName = shadeName;
+    }
+
+    public String getGelType() {
+        return gelType;
+    }
+
+    public void setGelType(String gelType) {
+        this.gelType = gelType;
     }
 
     @Override
