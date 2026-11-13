@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 public class GelColourPolishEntity extends GelPolishEntity{
     @Column(name = "glitter")
     private boolean glitter;
+    @Column(name = "colour")
+    private String colour;
 
     public GelColourPolishEntity() {
     }
@@ -17,8 +19,9 @@ public class GelColourPolishEntity extends GelPolishEntity{
         super(stock, shadeName, gelType);
     }
 
-    public GelColourPolishEntity(boolean glitter) {
+    public GelColourPolishEntity(boolean glitter, String colour) {
         this.glitter = glitter;
+        this.colour = colour;
     }
 
     public GelColourPolishEntity(int stock, String shadeName, String gelType, boolean glitter) {
@@ -32,6 +35,14 @@ public class GelColourPolishEntity extends GelPolishEntity{
 
     public void setGlitter(boolean glitter) {
         this.glitter = glitter;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
     @Override
