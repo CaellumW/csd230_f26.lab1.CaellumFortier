@@ -76,10 +76,33 @@ public class GlobalExceptionHandler {
                 .body(ex.getMessage());
     }
 
+    @ExceptionHandler(ColourGelNotFoundException.class)
+    public ResponseEntity<String> handleColourGelNotFound(
+            ColourGelNotFoundException ex) {
+        return ResponseEntity.status(404)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(GelPolishNotFoundException.class)
+    public ResponseEntity<String> handleGelNotFound(
+            GelPolishNotFoundException ex) {
+        return ResponseEntity.status(404)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(BuilderGelNotFoundException.class)
+    public ResponseEntity<String> handleBuilderGelNotFound(
+            BuilderGelNotFoundException ex) {
+        return ResponseEntity.status(404)
+                .body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(
             Exception ex) {
         return ResponseEntity.status(500)
                 .body(ex.getMessage());
     }
+
+
 }
