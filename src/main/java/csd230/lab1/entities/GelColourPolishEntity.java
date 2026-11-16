@@ -15,14 +15,12 @@ public class GelColourPolishEntity extends GelPolishEntity{
     public GelColourPolishEntity() {
     }
 
-    public GelColourPolishEntity(int stock, String shadeName, String gelType) {
+    public GelColourPolishEntity(int stock, String shadeName, String gelType, boolean glitter, String colour) {
         super(stock, shadeName, gelType);
-    }
-
-    public GelColourPolishEntity(boolean glitter, String colour) {
         this.glitter = glitter;
         this.colour = colour;
     }
+
 
     public GelColourPolishEntity(int stock, String shadeName, String gelType, boolean glitter) {
         super(stock, shadeName, gelType);

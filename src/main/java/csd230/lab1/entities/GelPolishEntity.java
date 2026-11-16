@@ -3,8 +3,6 @@ package csd230.lab1.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "GEL_POLISHES")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class GelPolishEntity extends ProductEntity{
     @Column(name = "Stock")
     private int stock;
