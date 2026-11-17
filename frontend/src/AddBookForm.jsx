@@ -13,7 +13,7 @@ export default function AddBookForm({onBookAdded}) {
         setError('');
         setSaving(true);
         try {
-            const response = await fetch('/api/rest/books', {
+            const response = await fetch('/api/rest/books/add', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({title, author, price: Number(price), copies: Number(copies)})

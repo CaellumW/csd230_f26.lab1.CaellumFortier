@@ -2,8 +2,9 @@ package csd230.lab1.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 
-@Entity
+@MappedSuperclass
 public abstract class PublicationEntity extends ProductEntity {
     @Column(name = "title")
     private String title;
@@ -41,13 +42,14 @@ public abstract class PublicationEntity extends ProductEntity {
         return copies;
     }
 
-    @Override public double getPrice() {
-        return super.getPrice();
-    }
-    @Override
-    public void setPrice(double price) {
-        super.setPrice(price);
-    }
+//    @Override
+//    public double getPrice() {
+//        return super.getPrice();
+//    }
+//    @Override
+//    public void setPrice(double price) {
+//        super.setPrice(price);
+//    }
 
     public void setCopies(int c) {
         this.copies = c;

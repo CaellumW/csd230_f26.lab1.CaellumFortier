@@ -32,6 +32,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
         this.carts = carts;
     }
 
+    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -40,6 +41,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
         this.id = id;
     }
 
+    @JsonIgnore
     public String getProductType() {
         return this.getClass().getSimpleName();
     }

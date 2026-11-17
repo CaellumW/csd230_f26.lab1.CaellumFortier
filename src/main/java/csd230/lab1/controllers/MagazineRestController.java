@@ -37,6 +37,13 @@ public class MagazineRestController {
     @Operation(description = "Saves a new magazine to the magazine repository")
     @ApiResponse(responseCode = "200", description = "Magazine saved")
     public MagazineEntity addMagazine(@RequestBody MagazineEntity magazine) {
+
+        System.out.println("TITLE = " + magazine.getTitle());
+        System.out.println("PRICE = " + magazine.getPrice());
+        System.out.println("COPIES = " + magazine.getCopies());
+        System.out.println("ORDER QTY = " + magazine.getOrderQty());
+        System.out.println("ISSUE = " + magazine.getCurrentIssue());
+
         return magazineRepository.save(magazine);
     }
 
@@ -71,7 +78,8 @@ public class MagazineRestController {
     }
 
     @PostMapping("/test")
-    public String test(@RequestBody String json) {
-        return json;
+    public String test(@RequestBody MagazineEntity magazine) {
+        System.out.println(magazine.getPrice());
+        return "ok";
     }
 }
