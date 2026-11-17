@@ -51,7 +51,7 @@ public class MagazineRestController {
                 .map(magazine -> {
                     magazine.setCurrentIssue(updatedMagazine.getCurrentIssue());
                     magazine.setCopies(updatedMagazine.getCopies());
-                    magazine.setName(updatedMagazine.getName());
+                    magazine.setTitle(updatedMagazine.getTitle());
                     magazine.setPrice(updatedMagazine.getPrice());
                     return ResponseEntity.ok(magazineRepository.save(magazine));
                 })
@@ -68,5 +68,10 @@ public class MagazineRestController {
 
         magazineRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/test")
+    public String test(@RequestBody String json) {
+        return json;
     }
 }

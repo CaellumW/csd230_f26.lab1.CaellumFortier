@@ -50,7 +50,6 @@ public class DiscMagRestController {
                 .map(discMag -> {
                     discMag.setCopies(updatedDiscMag.getCopies());
                     discMag.setCurrentIssue(updatedDiscMag.getCurrentIssue());
-                    discMag.setName(updatedDiscMag.getName());
                     discMag.setPrice(updatedDiscMag.getPrice());
                     discMag.setTitle(updatedDiscMag.getTitle());
                     return ResponseEntity.ok(discMagRepository.save(discMag));

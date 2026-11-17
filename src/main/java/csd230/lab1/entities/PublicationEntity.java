@@ -40,8 +40,13 @@ public abstract class PublicationEntity extends ProductEntity {
     public int getCopies() {
         return copies;
     }
+
     @Override public double getPrice() {
         return super.getPrice();
+    }
+    @Override
+    public void setPrice(double price) {
+        super.setPrice(price);
     }
 
     public void setCopies(int c) {

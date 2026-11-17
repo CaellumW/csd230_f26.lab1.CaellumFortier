@@ -51,7 +51,6 @@ public class ProductRestController {
 
         return productRepo.findById(id)
                 .map(product -> {
-                    product.setName(updatedProduct.getName());
                     product.setPrice(updatedProduct.getPrice());
                     return ResponseEntity.ok(productRepo.save(product));
                 })
