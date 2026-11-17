@@ -36,8 +36,7 @@ export default function AddBookForm({onBookAdded}) {
         <h2>Add New Book</h2>
         <label>Title<input value={title} onChange={e => setTitle(e.target.value)} required/></label>
         <label>Author<input value={author} onChange={e => setAuthor(e.target.value)} required/></label>
-        <label>Price<input type="number" min="0" step="0.01" value={price} onChange={e => setPrice(e.target.value)}
-                           required/></label>
+        <label>Price<input type="number" min="0" step="0.01" value={price} onChange={e => setPrice(e.target.value)} required/></label>
         <label>Copies<input type="number" min="0" step="1" value={copies} onChange={e => setCopies(e.target.value)}
                             required/></label>
         <button disabled={saving}>Save Book</button>
