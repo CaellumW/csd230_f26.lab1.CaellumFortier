@@ -19,7 +19,7 @@ public class ProductRestController {
     @Autowired
     private ProductEntityRepository productRepo;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all products")
     @ApiResponse(responseCode = "200", description = "All products found")
     public List<ProductEntity> getAllProducts() {

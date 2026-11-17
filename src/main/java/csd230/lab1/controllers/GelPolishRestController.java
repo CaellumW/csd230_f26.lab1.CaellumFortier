@@ -18,7 +18,7 @@ public class GelPolishRestController {
     @Autowired
     private GelPolishEntityRepository gelPolishRepository;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all gel polishes")
     @ApiResponse(responseCode = "200", description = "All gel polishes found")
     public List<GelPolishEntity> getAllGelPolishes() {

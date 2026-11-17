@@ -19,7 +19,7 @@ public class TicketRestController {
     @Autowired
     private TicketEntityRepository ticketRepo;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all tickets")
     @ApiResponse(responseCode = "200", description = "All tickets found")
     public List<TicketEntity> getAllTickets() {

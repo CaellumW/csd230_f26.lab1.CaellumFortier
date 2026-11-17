@@ -17,7 +17,7 @@ public class MagazineRestController {
     @Autowired
     private MagazineEntityRepository magazineRepository;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Lists all of the magazines")
     @ApiResponse(responseCode = "200", description = "All magazines found")
     public List<MagazineEntity> getAllMags() {

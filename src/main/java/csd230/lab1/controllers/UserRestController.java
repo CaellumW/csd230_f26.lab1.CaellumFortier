@@ -20,7 +20,7 @@ public class UserRestController {
     @Autowired
     private UserEntityRepository userRepo;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all users")
     @ApiResponse(responseCode = "200", description = "All users found")
     public List<UserEntity> getAllUsers() {

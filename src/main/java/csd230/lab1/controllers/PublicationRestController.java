@@ -19,7 +19,7 @@ public class PublicationRestController {
     @Autowired
     private PublicationEntityRepository publicationRepo;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all publications")
     @ApiResponse(responseCode = "200", description = "All publications found")
     public List<PublicationEntity> getAllPublicataions() {

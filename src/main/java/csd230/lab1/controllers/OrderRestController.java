@@ -26,7 +26,7 @@ public class OrderRestController {
     @Autowired
     private PublicationEntityRepository publicationRepository;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all orders")
     @ApiResponse(responseCode = "200", description = "All orders found")
     public List<OrderEntity> getAllOrders() {

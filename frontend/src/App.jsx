@@ -7,9 +7,9 @@ import AddBookForm from './AddBookForm.jsx';
 import BookList from './BookList.jsx';
 import './App.css';
 import BuilderGelList from './BuilderGelList.jsx';
-import AddBuilderGelForm from './AddBuilderGelForm.jsx';
-import ColourGelList from './ColourGelList.jsx';
-import AddColourGelForm from './AddColourGelForm.jsx';
+import AddBuilderGelForm from './BuilderGelForm.jsx';
+import ColourGelList from './GelColourList.jsx';
+import AddColourGelForm from './GelColourForm.jsx';
 
 export default function App() {
   const navigate = useNavigate();

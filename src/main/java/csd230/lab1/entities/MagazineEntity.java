@@ -1,9 +1,6 @@
 package csd230.lab1.entities;
 
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +9,9 @@ import java.util.Date;
 @Entity
 @DiscriminatorValue("MAGAZINE")
 public class MagazineEntity extends PublicationEntity {
+    @Column(name = "orderQty")
     private int orderQty;
+    @Column(name = "currentIssue")
     private LocalDateTime currentIssue;
 
     public MagazineEntity() {

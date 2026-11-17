@@ -16,7 +16,7 @@ public class DiscMagRestController {
     @Autowired
     private DiscMagEntityRepository discMagRepository;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(description = "Retrieves all discmags")
     @ApiResponse(responseCode = "200", description = "All discmags found")
     public List<DiscMagEntity> getAllDiscMags() {
