@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @DiscriminatorValue("MAGAZINE")
 public class MagazineEntity extends PublicationEntity {
-    @Column(name = "orderQty")
+    @Column(name = "OrderQty")
     private int orderQty;
     @Column(name = "currentIssue")
     private LocalDateTime currentIssue;
