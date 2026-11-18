@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import BuilderGel from './BuilderGel.jsx';
 import AddBuilderGelForm from "./BuilderGelForm.jsx";
 
-export default function BuilderGelList({ buildergels, loading, error, onDelete, onUpdate }) {
+export default function BuilderGelList() {
     const [builderGels, setBuilderGels] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
