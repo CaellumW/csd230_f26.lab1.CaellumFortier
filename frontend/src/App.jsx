@@ -233,7 +233,7 @@ export default function App() {
             <Route path="/add" element={<AddBookForm onBookAdded={handleBookAdded}/>}/>
             <Route path="/magazines" element={<MagazineList/>}/>
             <Route path="/magazines/add" element={<AddMagazineForm onMagazineAdded={handleMagazineAdded}/>}/>
-            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel}/>}/>
+            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGelPolish} onUpdate={handleUpdateBuilderGelPolish}/>}/>
             <Route path="/buildergels/add" element={<AddBuilderGelForm onBuilderPolishAdded={handleBuilderGelAdded}/>}/>
             <Route path="/colourgels" element={<ColourGelList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel}/>}/>
             <Route path="/colourgels/add" element={<AddColourGelForm onPolishAdded={handleColourGelAdded}/>}/>
