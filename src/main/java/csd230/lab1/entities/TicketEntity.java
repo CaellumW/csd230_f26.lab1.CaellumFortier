@@ -36,9 +36,9 @@ public class TicketEntity extends ProductEntity {
         this.description = d;
     }
 
-    public void setPrice(double p) {
-        super.setPrice(p);
-    }
+//    public void setPrice(double p) {
+//        super.setPrice(p);
+//    }
 
     @Override
     public String toString() {

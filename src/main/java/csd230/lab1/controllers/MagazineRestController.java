@@ -1,10 +1,15 @@
 package csd230.lab1.controllers;
+
 import csd230.lab1.entities.MagazineEntity;
 import csd230.lab1.repositories.MagazineEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -78,8 +83,7 @@ public class MagazineRestController {
     }
 
     @PostMapping("/test")
-    public String test(@RequestBody MagazineEntity magazine) {
-        System.out.println(magazine.getPrice());
+    public String test2(@RequestBody MagazineEntity magazine) {
         return "ok";
     }
 }

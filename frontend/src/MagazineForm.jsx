@@ -12,7 +12,7 @@ export default function MagazineForm({ onMagazineAdded }) {
     async function handleSubmit(event) {
         event.preventDefault(); setError(''); setSaving(true);
         try {
-            const response = await fetch('/api/rest/magazines/test', { // CHANGE THIS BACK TO ADD AFTER TESTING
+            const response = await fetch('/api/rest/magazines/add', { // CHANGE THIS BACK TO ADD AFTER TESTING
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, price: Number(price),
                     copies: Number(copies), orderQty: Number(orderQty), currentIssue })

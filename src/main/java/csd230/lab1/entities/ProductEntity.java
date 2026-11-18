@@ -1,9 +1,7 @@
 package csd230.lab1.entities;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import csd230.lab1.pojos.SaleableItem;
 import jakarta.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -32,7 +30,6 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
         this.carts = carts;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -59,12 +56,5 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     public String toString() {
         return "ProductEntity{id=" + id + "} : " + super.toString();
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (o == null || getClass() != o.getClass()) return false;
-//        ProductEntity that = (ProductEntity) o;
-//        return Objects.equals(id, that.id) && Objects.equals(carts, that.carts);
-//    }
 
 }
