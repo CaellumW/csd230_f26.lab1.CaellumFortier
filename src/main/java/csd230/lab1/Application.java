@@ -1,6 +1,4 @@
 package csd230.lab1;
-
-
 import com.github.javafaker.Commerce;
 import com.github.javafaker.Faker;
 import csd230.lab1.entities.BookEntity;
@@ -93,14 +91,6 @@ public class Application implements CommandLineRunner {
 		cart.addProduct(magazine);
 		// magazine.setCart(cart);
 		cartRepository.save(cart);
-
-
-
-
-		// productRepository.save(book);
-
-
-
 
 		List<ProductEntity> allProducts = productRepository.findAll();
 

@@ -83,7 +83,18 @@ public class MagazineRestController {
     }
 
     @PostMapping("/test")
-    public String test2(@RequestBody MagazineEntity magazine) {
+    public String test(@RequestBody MagazineDto dto) {
+
+        MagazineEntity magazine = new MagazineEntity();
+
+        magazine.setOrderQty(dto.orderQty);
+
+        System.out.println(magazine.getOrderQty());
+
         return "ok";
+    }
+
+    public static class MagazineDto {
+        public Integer orderQty;
     }
 }
