@@ -1,3 +1,4 @@
+import api from './api.js';
 import {useState, useEffect} from 'react';
 import {Routes, Route, useNavigate} from 'react-router';
 import NavBar from './NavBar.jsx';
@@ -21,31 +22,11 @@ export default function App() {
     const [colourGels, setColourGels] = useState([]);
     useEffect(() => {
         let active = true;
-
-        Promise.all([
-            fetch('/api/rest/books').then(r => r.json()),
-            fetch('/api/rest/buildergelpolishes').then(r => r.json()),
-            fetch('/api/rest/gelcolourpolishes').then(r => r.json()),
-            fetch('/api/rest/magazines').then(r => r.json())
-        ])
-            .then(([bookData, builderGelData, colourGelData, magazineData]) => {
-                if (active) {
-                    setBooks(bookData);
-                    setBuilderGels(builderGelData);
-                    setColourGels(colourGelData);
-                    setMagazines(magazineData);
-                }
-            })
-            .catch(err => {
-                if (active) setError(err.message);
-            })
-            .finally(() => {
-                if (active) setLoading(false);
-            });
-
-        return () => {
-            active = false;
-        };
+        api.get('/books')
+            .then(response => { if (active) setBooks(response.data); })
+            .catch(err => { if (active) setError(err.message); })
+            .finally(() => { if (active) setLoading(false); });
+        return () => { active = false; };
     }, []);
 
     // ADD BOOK
@@ -77,13 +58,11 @@ export default function App() {
         if (!window.confirm('Delete this book?')) return;
         setError('');
         try {
-            const response = await fetch(`/api/rest/books/${id}`, {method: 'DELETE'});
-            if (!response.ok) throw new Error(`Delete failed (${response.status})`);
+            await api.delete(`/books/${id}`);
             setBooks(previous => previous.filter(book => book.id !== id));
-        } catch (err) {
-            setError(err.message);
-        }
+        } catch (err) { setError(err.message); }
     }
+
     // DELETE BUILDER GEL
     async function handleDeleteBuilderGel(id) {
         const response = await fetch(
@@ -138,14 +117,11 @@ export default function App() {
 
     // UPDATE BOOKS
     async function handleUpdateBook(id, data) {
-        const response = await fetch(`/api/rest/books/${id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error(`Update failed (${response.status})`);
-        const savedBook = await response.json();
+        const response = await api.put(`/books/${id}`, data);
+        const savedBook = response.data;
         setBooks(previous => previous.map(book => book.id === id ? savedBook : book));
     }
+
     // UPDATE MAGAZINES
     async function handleUpdateMagazine(id, data) {
         const response = await fetch(`/api/rest/magazines/${id}`, {
@@ -156,6 +132,7 @@ export default function App() {
         const savedMagazine = await response.json();
         setBooks(previous => previous.map(magazine => magazine.id === id ? savedMagazine : magazine));
     }
+
     // UPDATE BUILDER GEL
     async function handleUpdateBuilderGel(id, data) {
         const response = await fetch(

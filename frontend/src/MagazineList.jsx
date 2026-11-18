@@ -8,12 +8,8 @@ export default function MagazineList() {
     const [error, setError] = useState('');
     useEffect(() => {
         let active = true;
-        fetch('/api/rest/magazines')
-            .then(res => {
-                if (!res.ok) throw new Error(`Load failed (${res.status})`);
-                return res.json();
-            })
-            .then(data => { if (active) setMagazines(data); })
+        api.get('/magazines')
+            .then(response => { if (active) setMagazines(response.data); })
             .catch(err => { if (active) setError(err.message); })
             .finally(() => { if (active) setLoading(false); });
         return () => { active = false; };
@@ -23,19 +19,14 @@ export default function MagazineList() {
         if (!window.confirm('Delete this magazine?')) return;
         setError('');
         try {
-            const res = await fetch(`/api/rest/magazines/${id}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error(`Delete failed (${res.status})`);
+            await api.delete(`/magazines/${id}`);
             setMagazines(previous => previous.filter(magazine => magazine.id !== id));
         } catch (err) { setError(err.message); }
     }
 
     async function handleUpdateMagazine(id, data) {
-        const res = await fetch(`/api/rest/magazines/${id}`, {
-            method: 'PUT', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        if (!res.ok) throw new Error(`Update failed (${res.status})`);
-        const saved = await res.json();
+        const res = await api.put(`/magazines/${id}`, data);
+        const saved = res.data;
         setMagazines(previous => previous.map(magazine => magazine.id === id ? saved : magazine));
     }
 
