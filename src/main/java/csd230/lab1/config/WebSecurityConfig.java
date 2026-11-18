@@ -41,9 +41,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                                 // 1. Allow public access to specific endpoints
-                                .requestMatchers(
-                                        "/h2-console/**",
-                                        "/login", "/register",
+                                .requestMatchers("/h2-console/**", "/login", "/register",
                                         "/css/**", "/js/**",
                                         // "/api/rest/**", //REMOVING this line as we need to authorize it now
                                         "/error").permitAll()
@@ -62,8 +60,14 @@ public class WebSecurityConfig {
                                 .requestMatchers("/books/add", "/books/edit/**", "/books/delete/**").hasRole("ADMIN")
                                 // NEW REST API Security (Requires Role)
 
-                                // TEMPORARY: early React exercises only; restore protection in 2.12
-                                .requestMatchers("/api/rest/**").permitAll()
+                                // Current-user JSON actions: controller resolves ownership from Principal.
+                                .requestMatchers(HttpMethod.GET, "/api/rest/carts/mine").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/rest/carts/mine/products/*").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/rest/carts/mine/products/*").hasAnyRole("USER", "ADMIN")
+                                // Original whole-cart CRUD is administrative, including list/by-ID reads.
+                                .requestMatchers("/api/rest/carts", "/api/rest/carts/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/rest/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/api/rest/**").hasRole("ADMIN")
 
 //                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/rest/**").hasAnyRole("USER", "ADMIN")
 //                        .requestMatchers("/api/rest/**").hasRole("ADMIN")
