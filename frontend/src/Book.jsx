@@ -10,10 +10,12 @@ export default function Book({ book, onDelete, onUpdate }) {
         setDraft(book);
         setError(''); setIsEditing(true);
     }
+
     function handleChange(event) {
         const { name, value } = event.target;
         setDraft(previous => ({ ...previous, [name]: value }));
     }
+
     async function handleSave(event) {
         event.preventDefault(); setError(''); setSaving(true);
         try {

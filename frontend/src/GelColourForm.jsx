@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-export default function AddColourGelForm({ onColourGelAdded }) {
+export default function AddGelColourPolishForm({ onPolishAdded }) {
+    const [stock, setStock] = useState(0);
     const [shadeName, setShadeName] = useState('');
     const [gelType, setGelType] = useState('');
     const [colour, setColour] = useState('');
     const [glitter, setGlitter] = useState(false);
-    const [price, setPrice] = useState('');
-    const [stock, setStock] = useState(0);
+
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 
@@ -16,18 +16,17 @@ export default function AddColourGelForm({ onColourGelAdded }) {
         setSaving(true);
 
         try {
-            const response = await fetch('/api/rest/gelcolourpolishes/add', {
+            const response = await fetch('/api/rest/gel-colour-polish/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    stock: Number(stock),
                     shadeName,
                     gelType,
                     colour,
-                    glitter,
-                    price: Number(price),
-                    stock: Number(stock)
+                    glitter
                 })
             });
 
@@ -35,28 +34,25 @@ export default function AddColourGelForm({ onColourGelAdded }) {
                 throw new Error(`Save failed (${response.status})`);
             }
 
-            const savedColourGel = await response.json();
+            const savedPolish = await response.json();
 
-            onColourGelAdded(savedColourGel);
+            onPolishAdded(savedPolish);
 
+            setStock(0);
             setShadeName('');
             setGelType('');
             setColour('');
             setGlitter(false);
-            setPrice('');
-            setStock(0);
-        }
-        catch (err) {
+        } catch (err) {
             setError(err.message);
-        }
-        finally {
+        } finally {
             setSaving(false);
         }
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add New Colour Gel</h2>
+            <h2>Add New Gel Colour Polish</h2>
 
             <label>
                 Shade Name
@@ -86,27 +82,6 @@ export default function AddColourGelForm({ onColourGelAdded }) {
             </label>
 
             <label>
-                Glitter
-                <input
-                    type="checkbox"
-                    checked={glitter}
-                    onChange={e => setGlitter(e.target.checked)}
-                />
-            </label>
-
-            <label>
-                Price
-                <input
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={price}
-                    onChange={e => setPrice(e.target.value)}
-                    required
-                />
-            </label>
-
-            <label>
                 Stock
                 <input
                     type="number"
@@ -118,11 +93,24 @@ export default function AddColourGelForm({ onColourGelAdded }) {
                 />
             </label>
 
+            <label>
+                Glitter
+                <input
+                    type="checkbox"
+                    checked={glitter}
+                    onChange={e => setGlitter(e.target.checked)}
+                />
+            </label>
+
             <button disabled={saving}>
-                Save Colour Gel
+                Save Polish
             </button>
 
-            {error && <p role="alert">{error}</p>}
+            {error && (
+                <p role="alert">
+                    {error}
+                </p>
+            )}
         </form>
     );
 }

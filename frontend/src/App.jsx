@@ -7,9 +7,10 @@ import AddBookForm from './AddBookForm.jsx';
 import BookList from './BookList.jsx';
 import './App.css';
 import BuilderGelList from './BuilderGelList.jsx';
-import AddBuilderGelForm from './BuilderGelForm.jsx';
+import AddBuilderGelForm from './AddBuilderGelForm.jsx';
 import ColourGelList from './GelColourList.jsx';
 import AddColourGelForm from './GelColourForm.jsx';
+import AddMagazineForm from "./AddMagazineForm.jsx";
 
 export default function App() {
     const navigate = useNavigate();
@@ -84,56 +85,42 @@ export default function App() {
             setError(err.message);
         }
     }
+
     // DELETE BUILDER GEL
-    async function handleDeleteBuilderGel(id) {
-        const response = await fetch(
-            `/api/rest/buildergelpolishes/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+    async function handleDeleteBuilderGelPolish(id) {
+        if (!window.confirm('Delete this builder gel polish?')) return;
+        setError('');
+        try {
+            const response = await fetch(`/api/rest/buildergelpolishes/${id}`, {method: 'DELETE'});
+            if (!response.ok) {throw new Error(`Delete failed (${response.status})`);}
+            setBuilderGelPolishes(previous => previous.filter(polish => polish.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setBuilderGels(previous =>
-            previous.filter(gel => gel.id !== id)
-        );
     }
+
     // DELETE COLOUR GEL
-    async function handleDeleteColourGel(id) {
-        const response = await fetch(
-            `/api/rest/gelcolourpolishes/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+    async function handleDeleteGelColourPolish(id) {
+        if (!window.confirm('Delete this colour gel polish?')) {return;}
+        setError('');
+        try {const response = await fetch(`/api/rest/gelcolourpolishes/${id}`, {method: 'DELETE'});
+            if (!response.ok) {throw new Error(`Delete failed (${response.status})`);}
+            setGelColourPolishes(previous => previous.filter(polish => polish.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setColourGels(previous =>
-            previous.filter(gel => gel.id !== id)
-        );
     }
+
     // DELETE MAGAZINE
     async function handleDeleteMagazine(id) {
-        const response = await fetch(
-            `/api/rest/magazines/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+        if (!window.confirm('Delete this magazine?')) {return;}
+        setError('');
+        try {const response = await fetch(`/api/rest/magazines/${id}`, {method: 'DELETE'});
+            if (!response.ok) {throw new Error(`Delete failed (${response.status})`);}
+            setMagazines(previous => previous.filter(magazine => magazine.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setMagazines(previous =>
-            previous.filter(magazine => magazine.id !== id)
-        );
     }
 
     // UPDATE BOOKS
@@ -146,18 +133,39 @@ export default function App() {
         const savedBook = await response.json();
         setBooks(previous => previous.map(book => book.id === id ? savedBook : book));
     }
+
     // UPDATE MAGAZINES
     async function handleUpdateMagazine(id, data) {
-        const response = await fetch(`/api/rest/magazines/${id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error(`Update failed (${response.status})`);
+        const response = await fetch(
+            `/api/rest/magazines/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Update failed (${response.status})`
+            );
+        }
+
         const savedMagazine = await response.json();
-        setBooks(previous => previous.map(magazine => magazine.id === id ? savedMagazine : magazine));
+
+        setMagazines(previous =>
+            previous.map(magazine =>
+                magazine.id === id
+                    ? savedMagazine
+                    : magazine
+            )
+        );
     }
+
     // UPDATE BUILDER GEL
-    async function handleUpdateBuilderGel(id, data) {
+    async function handleUpdateBuilderGelPolish(id, data) {
         const response = await fetch(
             `/api/rest/buildergelpolishes/${id}`,
             {
@@ -169,16 +177,25 @@ export default function App() {
             }
         );
 
-        const savedBuilderGel = await response.json();
+        if (!response.ok) {
+            throw new Error(
+                `Update failed (${response.status})`
+            );
+        }
 
-        setBuilderGels(previous =>
-            previous.map(gel =>
-                gel.id === id ? savedBuilderGel : gel
+        const savedBuilderGelPolish = await response.json();
+
+        setBuilderGelPolishes(previous =>
+            previous.map(polish =>
+                polish.id === id
+                    ? savedBuilderGelPolish
+                    : polish
             )
         );
     }
+
     // UPDATE COLOUR GELS
-    async function handleUpdateColourGel(id, data) {
+    async function handleUpdateGelColourPolish(id, data) {
         const response = await fetch(
             `/api/rest/gelcolourpolishes/${id}`,
             {
@@ -190,11 +207,19 @@ export default function App() {
             }
         );
 
-        const savedColourGel = await response.json();
+        if (!response.ok) {
+            throw new Error(
+                `Update failed (${response.status})`
+            );
+        }
 
-        setColourGels(previous =>
-            previous.map(gel =>
-                gel.id === id ? savedColourGel : gel
+        const savedGelColourPolish = await response.json();
+
+        setGelColourPolishes(previous =>
+            previous.map(polish =>
+                polish.id === id
+                    ? savedGelColourPolish
+                    : polish
             )
         );
     }
@@ -207,12 +232,12 @@ export default function App() {
             <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook}/>}/>
             <Route path="/add" element={<AddBookForm onBookAdded={handleBookAdded}/>}/>
             <Route path="/magazines" element={<MagazineList/>}/>
-            {/*<Route path="/addmagazine" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} onUpdate={handleUpdateMagazine}/>}/>*/}
-            <Route path="*" element={<h2>Page not found</h2>}/>
+            <Route path="/magazines/add" element={<AddMagazineForm onMagazineAdded={handleMagazineAdded}/>}/>
             <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel}/>}/>
-            <Route path="/addbuildergel" element={<AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded}/>}/>
+            <Route path="/buildergels/add" element={<AddBuilderGelForm onBuilderPolishAdded={handleBuilderGelAdded}/>}/>
             <Route path="/colourgels" element={<ColourGelList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel}/>}/>
-            <Route path="/addcolourgel" element={<AddColourGelForm onColourGelAdded={handleColourGelAdded}/>}/>
+            <Route path="/colourgels/add" element={<AddColourGelForm onPolishAdded={handleColourGelAdded}/>}/>
+            <Route path="*" element={<h2>Page not found</h2>}/>
         </Routes>
     </main>;
 }
