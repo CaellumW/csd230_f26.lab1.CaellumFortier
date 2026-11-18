@@ -1,16 +1,16 @@
 import {useState, useEffect} from 'react';
 import {Routes, Route, useNavigate} from 'react-router';
+import './App.css';
 import NavBar from './NavBar.jsx';
 import Home from './Home.jsx';
-import MagazineList from './MagazineList.jsx';
-import AddBookForm from './AddBookForm.jsx';
 import BookList from './BookList.jsx';
-import './App.css';
+import AddBookForm from './AddBookForm.jsx';
+import MagazineList from './MagazineList.jsx';
+import AddMagazineForm from "./AddMagazineForm.jsx";
 import BuilderGelList from './BuilderGelList.jsx';
 import AddBuilderGelForm from './AddBuilderGelForm.jsx';
 import ColourGelList from './GelColourList.jsx';
 import AddColourGelForm from './GelColourForm.jsx';
-import AddMagazineForm from "./AddMagazineForm.jsx";
 
 export default function App() {
     const navigate = useNavigate();
