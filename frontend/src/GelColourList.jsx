@@ -47,7 +47,7 @@ export default function GelColourList() {
         {error && <p role="alert">{error}</p>}
         {!loading && !error && gelColours.length === 0 && <p>No gel colours yet.</p>}
         <div className="gelcolour-list">
-            {gelColours.map(gelcolour => <GelColour key={gelcolour.id} {...gelcolour} onUpdate={handleUpdateGelColour} onDelete={handleDeleteGelColour} />)}
+            {gelColours.map(gelcolour => <GelColour key={gelcolour.id} {...gelcolour} onUpdate={handleUpdateGelColour} onDelete={handleDeleteGelColour} onSubmit={handle} />)}
         </div>
     </section>;
 
