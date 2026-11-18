@@ -18,6 +18,7 @@ export default function MagazineList() {
             .finally(() => { if (active) setLoading(false); });
         return () => { active = false; };
     }, []);
+
     async function handleDeleteMagazine(id) {
         if (!window.confirm('Delete this magazine?')) return;
         setError('');
@@ -27,6 +28,7 @@ export default function MagazineList() {
             setMagazines(previous => previous.filter(magazine => magazine.id !== id));
         } catch (err) { setError(err.message); }
     }
+
     async function handleUpdateMagazine(id, data) {
         const res = await fetch(`/api/rest/magazines/${id}`, {
             method: 'PUT', headers: { 'Content-Type': 'application/json' },
@@ -36,6 +38,7 @@ export default function MagazineList() {
         const saved = await res.json();
         setMagazines(previous => previous.map(magazine => magazine.id === id ? saved : magazine));
     }
+
     return <section>
         <h1>Magazines</h1>
         <MagazineForm onMagazineAdded={saved => setMagazines(previous => [...previous, saved])} />

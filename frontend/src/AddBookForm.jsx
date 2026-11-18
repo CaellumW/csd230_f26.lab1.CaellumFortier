@@ -16,7 +16,12 @@ export default function AddBookForm({onBookAdded}) {
             const response = await fetch('/api/rest/books/add', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({title, author, price: Number(price), copies: Number(copies)})
+                body: JSON.stringify({
+                    title,
+                    author,
+                    price: Number(price),
+                    copies: Number(copies)
+                })
             });
             if (!response.ok) throw new Error(`Save failed (${response.status})`);
             const savedBook = await response.json();
@@ -36,7 +41,8 @@ export default function AddBookForm({onBookAdded}) {
         <h2>Add New Book</h2>
         <label>Title<input value={title} onChange={e => setTitle(e.target.value)} required/></label>
         <label>Author<input value={author} onChange={e => setAuthor(e.target.value)} required/></label>
-        <label>Price<input type="number" min="0" step="0.01" value={price} onChange={e => setPrice(e.target.value)} required/></label>
+        <label>Price<input type="number" min="0" step="0.01" value={price} onChange={e => setPrice(e.target.value)}
+                           required/></label>
         <label>Copies<input type="number" min="0" step="1" value={copies} onChange={e => setCopies(e.target.value)}
                             required/></label>
         <button disabled={saving}>Save Book</button>

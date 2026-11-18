@@ -6,7 +6,7 @@ export default function NavBar() {
         <Link to="/inventory">Books</Link>
         <Link to="/add">Add Book</Link>
         <Link to="/magazines">Magazines</Link>
-        <Link to="/gelcolourpolishes">Gel Colour Polishes</Link>
-        <Link to="/buildergelpolishes">Builder Gel Polishes</Link>
+        <Link to="/colourgels">Gel Colour Polishes</Link>
+        <Link to="/buildergels">Builder Gel Polishes</Link>
     </nav>;
 }
