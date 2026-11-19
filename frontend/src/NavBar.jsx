@@ -3,7 +3,7 @@ import {Link, Route, useNavigate} from 'react-router';
 import useAuth from './useAuth.js';
 import DisplayCart from "./DisplayCart.jsx";
 
-export default function NavBar() {
+export default function NavBar({ cartCount }) {
     const { logout } = useAuth();
     const navigate = useNavigate();
     return <nav>
