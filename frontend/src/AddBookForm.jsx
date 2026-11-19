@@ -17,13 +17,10 @@ export default function AddBookForm({onBookAdded}) {
         setError('');
         setSaving(true);
         try {
-            const response = await api.post('/books', {
-                title, author, price: Number(price), copies: Number(copies)
-            });
-            onBookAdded(savedBook);;
+            const response = await api.post('/books', payload);
+            const savedBook = response.data;
             if (!response.ok) throw new Error(`Save failed (${response.status})`);
             if (!isCurrent()) return;
-            const savedBook = await response.json();
             onBookAdded(savedBook);
             setTitle('');
             setAuthor('');
@@ -32,7 +29,7 @@ export default function AddBookForm({onBookAdded}) {
         } catch (err) { if (isCurrent()) setError(err.message); }
         finally { if (isCurrent()) setSaving(false); }
     }
-    }
+
 
     return <form onSubmit={handleSubmit}>
         <h2>Add New Book</h2>
