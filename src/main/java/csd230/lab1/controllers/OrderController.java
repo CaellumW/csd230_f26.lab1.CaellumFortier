@@ -36,7 +36,7 @@ public class OrderController {
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         OrderEntity order = new OrderEntity();
-        double total = 0.0;
+        Double total = 0.0;
         Iterator<ProductEntity> iterator = cart.getProducts().iterator();
 
         while (iterator.hasNext()) {

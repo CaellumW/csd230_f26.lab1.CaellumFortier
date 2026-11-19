@@ -75,7 +75,7 @@ public class CartRestController {
             throw new CartNotFoundException();
         }
         OrderEntity order = new OrderEntity();
-        double total = 0.0;
+        Double total = 0.0;
 
         Iterator<ProductEntity> iterator = cart.getProducts().iterator();
 
