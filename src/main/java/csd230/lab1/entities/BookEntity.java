@@ -14,7 +14,7 @@ public class BookEntity extends PublicationEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String title, String author, double price, int copies) {
+    public BookEntity(String title, String author, Double price, Integer copies) {
         super(title, price, copies);
         this.author = author;
     }

@@ -17,4 +17,19 @@ public class BuilderGelPolishEntity extends GelPolishEntity{
         super(stock, shadeName, gelType);
         this.consistency = consistency;
     }
+
+    public String getConsistency() {
+        return consistency;
+    }
+
+    public void setConsistency(String consistency) {
+        this.consistency = consistency;
+    }
+
+    @Override
+    public String toString() {
+        return "BuilderGelPolishEntity{" +
+                "consistency='" + consistency + '\'' +
+                "} " + super.toString();
+    }
 }

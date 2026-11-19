@@ -8,12 +8,13 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("TICKET")
 public class TicketEntity extends ProductEntity {
     private String description;
-    @Column(name = "ticket_price") private double price;
+    @Column(name = "ticket_price")
+    private Double price;
 
     public TicketEntity() {
     }
 
-    public TicketEntity(String description, double price) {
+    public TicketEntity(String description, Double price) {
         this.description = description;
         this.price = price;
     }
@@ -24,7 +25,7 @@ public class TicketEntity extends ProductEntity {
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         return super.getPrice();
     }
 

@@ -26,7 +26,7 @@ public class OrderEntity{
     @Column(name = "id", nullable = false)
     private long id;
     @Column(name = "amount")
-    private double totalAmount;
+    private Double totalAmount;
     @Column(name ="TimeStamp")
     private LocalDateTime orderDate;
 
@@ -51,11 +51,11 @@ public class OrderEntity{
         this.id = id;
     }
 
-    public double getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

@@ -10,7 +10,7 @@ public class Ticket extends Product {
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 

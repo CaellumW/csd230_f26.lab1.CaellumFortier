@@ -44,7 +44,7 @@ public abstract class Publication extends Product {
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 

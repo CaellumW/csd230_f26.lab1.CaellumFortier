@@ -4,7 +4,6 @@ import csd230.lab1.pojos.SaleableItem;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,7 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "price")
-    private double price;
+    private Double price;
 
     @JsonIgnore //added to stop the infinite recursion
     @ManyToMany(mappedBy = "products")
@@ -44,11 +43,11 @@ public abstract class ProductEntity implements Serializable, SaleableItem {
     }
 
     @Override
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

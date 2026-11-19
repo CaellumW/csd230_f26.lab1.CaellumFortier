@@ -10,24 +10,24 @@ import java.util.Date;
 @DiscriminatorValue("MAGAZINE")
 public class MagazineEntity extends PublicationEntity {
     @Column(name = "OrderQty")
-    private int orderQty;
+    private Integer orderQty;
     @Column(name = "currentIssue")
     private LocalDateTime currentIssue;
 
     public MagazineEntity() {
     }
 
-    public MagazineEntity(String t, double p, int c, int o, LocalDateTime d) {
+    public MagazineEntity(String t, Double p, Integer c, Integer o, LocalDateTime d) {
         super(t, p, c);
         this.orderQty = o;
         this.currentIssue = d;
     }
 
-    public int getOrderQty() {
+    public Integer getOrderQty() {
         return orderQty;
     }
 
-    public void setOrderQty(int o) {
+    public void setOrderQty(Integer o) {
         this.orderQty = o;
     }
 

@@ -9,12 +9,12 @@ public abstract class PublicationEntity extends ProductEntity {
     @Column(name = "title")
     private String title;
     @Column(name = "copies")
-    private int copies;
+    private Integer copies;
 
     public PublicationEntity() {
     }
 
-    public PublicationEntity(String title, double price, int copies) {
+    public PublicationEntity(String title, Double price, Integer copies) {
         this.title = title;
         super.setPrice(price);
         this.copies = copies;
@@ -38,7 +38,7 @@ public abstract class PublicationEntity extends ProductEntity {
         this.title = t;
     }
 
-    public int getCopies() {
+    public Integer getCopies() {
         return copies;
     }
 
@@ -51,7 +51,7 @@ public abstract class PublicationEntity extends ProductEntity {
 //        super.setPrice(price);
 //    }
 
-    public void setCopies(int c) {
+    public void setCopies(Integer c) {
         this.copies = c;
     }
 

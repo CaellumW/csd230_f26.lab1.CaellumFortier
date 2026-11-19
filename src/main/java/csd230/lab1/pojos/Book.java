@@ -13,7 +13,7 @@ public class Book extends Publication {
         this.author = author;
     }
 
-    public Book(String author, String title, double price, int copies) {
+    public Book(String author, String title, Double price, Integer copies) {
         super(title, price, copies);
         this.author = author;
     }

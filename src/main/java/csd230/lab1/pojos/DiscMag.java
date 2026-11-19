@@ -35,8 +35,13 @@ public class DiscMag extends Magazine {
         setCopies(getCopies() - 1);
     }
 
-    public boolean isHasDisc() { return hasDisc; }
-    public void setHasDisc(boolean h) { this.hasDisc = h; }
+    public boolean isHasDisc() {
+        return hasDisc;
+    }
+
+    public void setHasDisc(boolean h) {
+        this.hasDisc = h;
+    }
 
     @Override
     public String toString() {
