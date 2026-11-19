@@ -47,15 +47,7 @@ export default function GelColourList() {
         {error && <p role="alert">{error}</p>}
         {!loading && !error && gelColours.length === 0 && <p>No gel colours yet.</p>}
         <div className="gelcolour-list">
-            {gelColours.map(gelcolour => <GelColour key={gelcolour.id} {...gelcolour} onUpdate={handleUpdateGelColour} onDelete={handleDeleteGelColour} onSubmit={handle} />)}
+            {gelColours.map(gelcolour => <GelColour key={gelcolour.id} {...gelcolour} onUpdate={handleUpdateGelColour} onDelete={handleDeleteGelColour} />)}
         </div>
     </section>;
-
-    // if (loading) return <p>Loading gel colours...</p>;
-    // return <section aria-label="Book inventory">
-    //     <h2>Gel colours</h2>
-    //     {error && <p role="alert">{error}</p>}
-    //     {!error && gelcolour.length === 0 && <p>No gel colours yet.</p>}
-    //     {gelcolour.map(gelcolour => <GelColour key={gelcolour.id} gelcolour={gelcolour} onDelete={onDelete} onUpdate={onUpdate} />)}
-    // </section>;
 }

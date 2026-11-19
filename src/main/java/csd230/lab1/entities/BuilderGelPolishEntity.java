@@ -13,7 +13,7 @@ public class BuilderGelPolishEntity extends GelPolishEntity{
     public BuilderGelPolishEntity() {
     }
 
-    public BuilderGelPolishEntity(int stock, String shadeName, String gelType, String consistency) {
+    public BuilderGelPolishEntity(Integer stock, String shadeName, String gelType, String consistency) {
         super(stock, shadeName, gelType);
         this.consistency = consistency;
     }

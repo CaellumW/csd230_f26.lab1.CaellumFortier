@@ -55,6 +55,7 @@ public class GelColourPolishRestController {
                     colourGel.setShadeName(updatedColourGel.getShadeName());
                     colourGel.setStock(updatedColourGel.getStock());
                     colourGel.setGlitter(updatedColourGel.isGlitter());
+                    colourGel.setColour(updatedColourGel.getColour());
                     return ResponseEntity.ok(colourGelRepository.save(colourGel));
                 })
                 .orElseThrow(() -> new ColourGelNotFoundException(id));

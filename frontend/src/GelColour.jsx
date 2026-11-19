@@ -1,27 +1,32 @@
 import { useState } from 'react';
 
-export default function GelColour({ gelcolour, onDelete, onUpdate }) {
+export default function GelColour({ id, gelType, price, shadeName, colour, stock, glitter, onDelete, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [draft, setDraft] = useState(gelcolour);
+    const [draft, setDraft] = useState({gelType, price, shadeName, colour, stock, glitter});
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 
     function beginEdit() {
-        setDraft(gelcolour);
+        setDraft({gelType, price, shadeName, colour, stock, glitter});
         setError(''); setIsEditing(true);
     }
     function handleChange(event) {
         const { name, value } = event.target;
         setDraft(previous => ({ ...previous, [name]: value }));
     }
+
     async function handleSave(event) {
         event.preventDefault(); setError(''); setSaving(true);
         try {
-            await onUpdate(gelcolour.id, { ...draft, price: Number(draft.price), copies: Number(draft.copies) });
+            await onUpdate(id, {
+                ...draft,
+                price: Number(draft.price),
+                stock: Number(draft.stock) });
             setIsEditing(false);
         } catch (err) { setError(err.message); }
         finally { setSaving(false); }
     }
+
     if (isEditing) return <form className="gelcolour-row editing" onSubmit={handleSave}>
         <label>Shade Name<input name="shadeName" value={draft.shadeName} onChange={handleChange} required/></label>
         <label>Gel Type<input name="gelType" value={draft.gelType} onChange={handleChange} required/></label>
@@ -35,9 +40,9 @@ export default function GelColour({ gelcolour, onDelete, onUpdate }) {
     </form>;
 
     return <article className="gelcolour-row">
-        <h3>{colourGel.shadeName}</h3>
-        <p>{colourGel.gelType} |{colourGel.colour} | Glitter: {colourGel.glitter ? "Yes" : "No"} | ${Number(colourGel.price).toFixed(2)} | Stock: {colourGel.stock}</p>
+        <h3>{shadeName}</h3>
+        <p>{gelType} | {colour} | glitter: {glitter ? "Yes" : "No"} | ${Number(price).toFixed(2)} | stock: {stock}</p>
         <button onClick={beginEdit}>Edit</button>
-        <button onClick={() => onDelete(gelcolour.id)}>Delete</button>
+        <button onClick={() => onDelete(id)}>Delete</button>
     </article>;
 }

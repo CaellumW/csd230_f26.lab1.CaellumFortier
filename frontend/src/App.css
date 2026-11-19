@@ -11,7 +11,7 @@ body {
     padding: 20px;
 }
 
-form, .book-row, .magazine-row, .book-card, .book-container {
+form, .book-row, .magazine-row, .book-card, .book-container, .gelcolour-row, .buildergel-row {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 15px;

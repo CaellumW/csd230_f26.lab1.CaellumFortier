@@ -54,6 +54,7 @@ public class BuilderGelPolishRestController {
                     builderGelPolish.setPrice(updatedBuilderGel.getPrice());
                     builderGelPolish.setShadeName(updatedBuilderGel.getShadeName());
                     builderGelPolish.setStock(updatedBuilderGel.getStock());
+                    builderGelPolish.setConsistency(updatedBuilderGel.getConsistency());
                     return ResponseEntity.ok(builderGelRepository.save(builderGelPolish));
                 })
                 .orElseThrow(() -> new BuilderGelNotFoundException(id));

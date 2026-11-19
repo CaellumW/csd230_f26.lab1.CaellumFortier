@@ -8,7 +8,7 @@ import BookList from './BookList.jsx';
 import './App.css';
 import BuilderGelList from './BuilderGelList.jsx';
 import AddBuilderGelForm from './BuilderGelForm.jsx';
-import ColourGelList from './GelColourList.jsx';
+import GelColourList from './GelColourList.jsx';
 import AddColourGelForm from './GelColourForm.jsx';
 
 export default function App() {
@@ -211,7 +211,7 @@ export default function App() {
             <Route path="*" element={<h2>Page not found</h2>}/>
             <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel}/>}/>
             <Route path="/addbuildergel" element={<AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded}/>}/>
-            <Route path="/colourgels" element={<ColourGelList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel}/>}/>
+            <Route path="/colourgels" element={<GelColourList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel}/>}/>
             <Route path="/addcolourgel" element={<AddColourGelForm onColourGelAdded={handleColourGelAdded}/>}/>
         </Routes>
     </main>;
