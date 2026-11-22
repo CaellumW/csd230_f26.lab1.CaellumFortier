@@ -2,40 +2,109 @@ package csd230.lab1.controllers;
 
 import csd230.lab1.entities.*;
 import csd230.lab1.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.Iterator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import csd230.lab1.repositories.CartEntityRepository;
+import csd230.lab1.entities.UserEntity;
+import csd230.lab1.repositories.UserEntityRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/rest/cart")
 @Tag(name = "Carts", description = "Operations for managing carts! =)")
+
 public class CartRestController {
     @Autowired
-    private CartEntityRepository cartRepository;
-    @Autowired
     private BookEntityRepository bookRepository;
-    @Autowired
-    private UserEntityRepository userRepository;
     @Autowired
     private PublicationEntityRepository publicationRepository;
     @Autowired
     private OrderEntityRepository orderRepository;
 
+    private final CartEntityRepository repository;
+    private final UserEntityRepository userRepository;
+    private final ProductEntityRepository productRepository;
+
+    public CartRestController(CartEntityRepository repository, UserEntityRepository userRepository, ProductEntityRepository productRepository) {
+        this.repository = repository;
+        this.userRepository = userRepository;
+        this.productRepository = productRepository;
+    }
+
+
     private CartEntity getCartForCurrentUser(Principal principal) {
         String username = principal.getName();
         UserEntity user = userRepository.findByUsername(username);
-        CartEntity cart = cartRepository.findByUser(user);
+        CartEntity cart = repository.findByUser(user);
 
         if (cart == null) {
             cart = new CartEntity();
             cart.setUser(user);
-            cartRepository.save(cart);
+            repository.save(cart);
         }
         return cart;
+    }
+
+    @PostMapping("/mine/products/{productId}")
+    @Transactional
+    @Operation(summary = "Add an existing product to the signed-in user's cart")
+    public CartEntity addMine(@PathVariable Long productId, Principal principal) {
+        var user = currentUser(principal, true);
+        var product = productRepository.findById(productId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CartEntity cart = repository.findByUser(user);
+        if (cart == null) {
+            cart = new CartEntity();
+            cart.setUser(user);
+        }
+        cart.addProduct(product);
+        return repository.save(cart);
+    }
+
+    // The authenticated username is the owner; no client cart/user ID is accepted.
+    private UserEntity currentUser(Principal principal, boolean forUpdate) {
+        var user = principal == null ? null : forUpdate
+                ? userRepository.findForCartUpdate(principal.getName())
+                : userRepository.findByUsername(principal.getName());
+        if (user == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return user;
+    }
+
+    @GetMapping("/mine")
+    @Transactional(readOnly = true)
+    @Operation(summary = "Read the signed-in user's cart; 204 if none has been created")
+    public ResponseEntity<CartEntity> mine(Principal principal) {
+        CartEntity cart = repository.findByUser(currentUser(principal, false));
+        return cart == null ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(cart);
+    }
+
+    @DeleteMapping("/mine/products/{productId}")
+    @Transactional
+    @Operation(summary = "Remove a product from the signed-in user's cart")
+    public ResponseEntity<CartEntity> removeMine(
+            @PathVariable Long productId, Principal principal) {
+        var user = currentUser(principal, true);
+        var product = productRepository.findById(productId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
+        CartEntity cart = repository.findByUser(user);
+        if (cart == null) {
+            return ResponseEntity.noContent().build();
+        }
+        cart.getProducts().remove(product);
+        product.getCarts().remove(cart);
+        return ResponseEntity.ok(cart);
     }
 
     @PutMapping("/PUT/{bookId}")
@@ -46,7 +115,7 @@ public class CartRestController {
         BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException(bookId));
         if (book != null) {
             cart.addProduct(book);
-            return cartRepository.save(cart);
+            return repository.save(cart);
         }
         return cart;
     }
@@ -60,7 +129,7 @@ public class CartRestController {
 
         if (book != null) {
             cart.getProducts().remove(book);
-            return cartRepository.save(cart);
+            return repository.save(cart);
         }
         return cart;
     }
@@ -95,7 +164,7 @@ public class CartRestController {
 
         order.setTotalAmount(total);
         orderRepository.save(order);
-        cartRepository.save(cart);
+        repository.save(cart);
 
         return order.getId();
     }
