@@ -16,6 +16,7 @@ import csd230.lab1.repositories.CartEntityRepository;
 import csd230.lab1.entities.UserEntity;
 import csd230.lab1.repositories.UserEntityRepository;
 import org.springframework.web.server.ResponseStatusException;
+import csd230.lab1.repositories.ProductEntityRepository;
 
 @RestController
 @RequestMapping("/api/rest/cart")

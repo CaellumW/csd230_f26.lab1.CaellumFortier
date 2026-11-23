@@ -7,7 +7,7 @@ import Magazine from './Magazine.jsx';
 
 // 2. Session state and Magazine loading
 export default function MagazineList({ onAddToCart, cartPending }) {
-    const { token } = useAuth();
+    const { token, isAdmin } = useAuth();
     const isCurrent = () => localStorage.getItem('token') === token;
     const [magazines, setMagazines] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -41,12 +41,12 @@ export default function MagazineList({ onAddToCart, cartPending }) {
     // 4. Form and Magazine list
     return <section>
         <h1>Magazines</h1>
-        <MagazineForm onMagazineAdded={saved => { if (isCurrent()) setMagazines(previous => [...previous, saved]); }} />
+        {isAdmin && <MagazineForm onMagazineAdded={saved => { if (isCurrent()) setMagazines(previous => [...previous, saved]); }} />}
         {loading && <p>Loading magazines...</p>}
         {error && <p role="alert">{error}</p>}
         {!loading && !error && magazines.length === 0 && <p>No magazines yet.</p>}
         <div className="magazine-list">
-            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} onUpdate={handleUpdateMagazine} onDelete={handleDeleteMagazine} onAddToCart={onAddToCart} cartPending={cartPending} />)}
+            {magazines.map(magazine => <Magazine key={magazine.id} {...magazine} onUpdate={handleUpdateMagazine} onDelete={handleDeleteMagazine} onAddToCart={onAddToCart} cartPending={cartPending} canManage={isAdmin} />)}/>)
         </div>
     </section>;
 }

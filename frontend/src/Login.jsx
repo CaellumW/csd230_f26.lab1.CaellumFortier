@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router';
 import api from './api.js';
 import useAuth from './useAuth.js';
+import { Navigate, useNavigate, useSearchParams } from 'react-router';
 
 export default function Login() {
     const { token, login } = useAuth();
     const navigate = useNavigate();
+    const [search] = useSearchParams();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -22,6 +24,7 @@ export default function Login() {
     if (token) return <Navigate to="/inventory" replace />;
     return <form onSubmit={handleSubmit}>
         <h2>Sign in</h2>
+        {search.get('reauth') === 'true' && <p role="status">Your session has expired or is invalid. Please sign in again.</p>}
         <label>Username<input autoComplete="username" value={username} onChange={e => setUsername(e.target.value)} required /></label>
         <label>Password<input type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} required /></label>
         <button disabled={pending}>Sign in</button>

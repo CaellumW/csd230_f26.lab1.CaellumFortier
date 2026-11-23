@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Book({ book, onDelete, onUpdate, onAddToCart, cartPending }) {
+export default function Book({ book, onDelete, onUpdate, onAddToCart, cartPending, canManage }) {
     const [isEditing, setIsEditing] = useState(false);const [draft, setDraft] = useState(book);
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
@@ -35,7 +35,7 @@ export default function Book({ book, onDelete, onUpdate, onAddToCart, cartPendin
         <h3>{book.title}</h3>
         <p>{book.author} | ${Number(book.price).toFixed(2)} | Copies: {book.copies}</p>
         <button disabled={cartPending} onClick={() => onAddToCart(book.id)}>Add to Cart</button>
-        <button onClick={beginEdit}>Edit</button>
-        <button onClick={() => onDelete(book.id)}>Delete</button>
+        {canManage && <button onClick={beginEdit}>Edit</button>}
+        {canManage && <button onClick={() => onDelete(book.id)}>Delete</button>}
     </article>;
 }

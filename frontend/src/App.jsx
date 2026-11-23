@@ -35,7 +35,7 @@ function SignedInBookApp() {
 }
 
 function BookApp() {
-    const {token} = useAuth();
+    const { token, isAdmin } = useAuth();
     const isCurrent = () => localStorage.getItem('token') === token;
     const navigate = useNavigate();
     const [cart, setCart] = useState(null);
@@ -240,14 +240,15 @@ function BookApp() {
         <NavBar/>
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} /><Route path="/magazines" element={<MagazineList />} />
+            <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
+            <Route path="/magazines" element={<MagazineList />} />
             <Route path="*" element={<h2>Page not found</h2>} />
-            <Route path="/add" element={<AddBookForm onBookAdded={handleBookAdded} />} />
+            <Route path="/add" element={isAdmin ? <AddBookForm onBookAdded={handleBookAdded} /> : <p role="alert">Administrator access is required.</p>} />
             <Route path="/magazines" element={<MagazineList onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
-            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel}/>}/>
-            <Route path="/addbuildergel" element={<AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded}/>}/>
-            <Route path="/colourgels" element={<GelColourList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel}/>}/>
-            <Route path="/addcolourgel" element={<AddColourGelForm onColourGelAdded={handleColourGelAdded}/>}/>
+            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addbuildergel" element={<AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/colourgels" element={<GelColourList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addcolourgel" element={<AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
             <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
             <NavBar cartCount={cart?.products?.length ?? 0} />
             {cartError && <p role="status">Cart: {cartError}</p>}
