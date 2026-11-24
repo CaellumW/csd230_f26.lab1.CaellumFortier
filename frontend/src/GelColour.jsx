@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function GelColour({ gelcolour, onDelete, onUpdate }) {
+export default function GelColour({ gelcolour, onDelete, onUpdate, onAddToCart, cartPending, canManage }) {
     const [isEditing, setIsEditing] = useState(false);
     const [draft, setDraft] = useState(gelcolour);
     const [error, setError] = useState('');

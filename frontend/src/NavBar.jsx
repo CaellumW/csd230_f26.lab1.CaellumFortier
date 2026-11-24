@@ -12,7 +12,9 @@ export default function NavBar({ cartCount }) {
         {isAdmin && <Link to="/add">Add Book</Link>}
         <Link to="/magazines">Magazines</Link>
         <Link to="/colourgels">Gel Colour Polishes</Link>
+        {isAdmin && <Link to="/addcolourgel">Add colour gel</Link>}
         <Link to="/buildergels">Builder Gel Polishes</Link>
+        {isAdmin && <Link to="/addbuildergel">Add builder gel</Link>}
         <Link to="/cart">Cart ({cartCount})</Link>
         <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
         <NavBar cartCount={cart?.products?.length ?? 0} />

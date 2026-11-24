@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Magazine({ magazine, onUpdate, onDelete, onAddToCart, cartPending, canManage }) {
+export default function Magazine({ magazine, onDelete, onUpdate, onAddToCart, cartPending, canManage }) {
     const [isEditing, setIsEditing] = useState(false);
     const [draft, setDraft] = useState({ title, price, copies, orderQty, currentIssue });
     const [error, setError] = useState('');
@@ -37,9 +37,9 @@ export default function Magazine({ magazine, onUpdate, onDelete, onAddToCart, ca
     </form>;
 
     return <article className="magazine-row">
-        <h3>{title}</h3>
-        <p>Price: ${Number(price).toFixed(2)} | Copies: {copies} | Order Quantity: {orderQty}</p>
-        <p>Current Issue: {currentIssue}</p>
+        <h3>{magazine.title}</h3>
+        <p>Price: ${Number(magazine.price).toFixed(2)} | Copies: {magazine.copies} | Order Quantity: {magazine.orderQty}</p>
+        <p>Current Issue: {magazine.currentIssue}</p>
         <button disabled={cartPending} onClick={() => onAddToCart(magazine.id)}>Add to Cart</button>
         {canManage && <button onClick={beginEdit}>Edit</button>}
         {canManage && <button onClick={() => onDelete(magazine.id)}>Delete</button>}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function BuilderGel({ buildergel, onDelete, onUpdate }) {
+export default function BuilderGel({ buildergel, onDelete, onUpdate, onAddToCart, cartPending, canManage }) {
     const [isEditing, setIsEditing] = useState(false);
     const [draft, setDraft] = useState(buildergel);
     const [error, setError] = useState('');
@@ -36,9 +36,10 @@ export default function BuilderGel({ buildergel, onDelete, onUpdate }) {
     </form>;
 
     return <article className="buildergel-row">
-        <h3>{shadeName}</h3>
+        <h3>{buildergel.shadeName}</h3>
         <p>{buildergel.gelType} | ${Number(buildergel.price).toFixed(2)} | Stock: {buildergel.stock}</p>
-        <button onClick={beginEdit}>Edit</button>
-        <button onClick={() => onDelete(buildergel.id)}>Delete</button>
+        <button disabled={cartPending} onClick={() => onAddToCart(buildergel.id)}>Add to Cart</button>
+        {canManage && <button onClick={beginEdit}>Edit</button>}
+        {canManage && <button onClick={() => onDelete(buildergel.id)}>Delete</button>}
     </article>;
 }
