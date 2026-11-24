@@ -191,7 +191,8 @@ function BookApp() {
 
     return <main className="app-container">
         <h1>My Bookstore Frontend</h1>
-        <NavBar/>
+        <NavBar cartCount={cart?.products?.length ?? 0} />
+        {cartError && <p role="status">Cart: {cartError}</p>}
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
@@ -203,8 +204,6 @@ function BookApp() {
             <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
             <Route path="*" element={<h2>Page not found</h2>} />
             <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
-            <NavBar cartCount={cart?.products?.length ?? 0} />
-            {cartError && <p role="status">Cart: {cartError}</p>}
         </Routes>
     </main>;
 }
