@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-export default function Magazine({ id, title, price, copies, orderQty, currentIssue, onUpdate, onDelete, onAddToCart, cartPending, canManage }) {
+export default function Magazine({ magazine, onUpdate, onDelete, onAddToCart, cartPending, canManage }) {
     const [isEditing, setIsEditing] = useState(false);const [draft, setDraft] = useState({ title, price, copies, orderQty, currentIssue });
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 
     function beginEdit() {
-        setDraft({ title, price, copies, orderQty, currentIssue });
+        setDraft(magazine);
         setError(''); setIsEditing(true);
     }
 
@@ -18,7 +18,7 @@ export default function Magazine({ id, title, price, copies, orderQty, currentIs
     async function handleSave(event) {
         event.preventDefault(); setError(''); setSaving(true);
         try {
-            await onUpdate(id, { ...draft, price: Number(draft.price), copies: Number(draft.copies), orderQty: Number(draft.orderQty) });
+            await onUpdate(magazine.id, { ...draft, price: Number(draft.price), copies: Number(draft.copies), orderQty: Number(draft.orderQty) });
             setIsEditing(false);
         } catch (err) { setError(err.message); }
         finally { setSaving(false); }
@@ -39,8 +39,8 @@ export default function Magazine({ id, title, price, copies, orderQty, currentIs
         <h3>{title}</h3>
         <p>Price: ${Number(price).toFixed(2)} | Copies: {copies} | Order Quantity: {orderQty}</p>
         <p>Current Issue: {currentIssue}</p>
-        <button disabled={cartPending} onClick={() => onAddToCart(id)}>Add to Cart</button>
+        <button disabled={cartPending} onClick={() => onAddToCart(magazine.id)}>Add to Cart</button>
         {canManage && <button onClick={beginEdit}>Edit</button>}
-        {canManage && <button onClick={() => onDelete(id)}>Delete</button>}
+        {canManage && <button onClick={() => onDelete(magazine.id)}>Delete</button>}
     </article>;
 }

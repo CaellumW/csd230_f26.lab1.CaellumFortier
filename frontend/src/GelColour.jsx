@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-export default function GelColour({ id, gelType, price, shadeName, colour, stock, glitter, onDelete, onUpdate }) {
+export default function GelColour({ gelcolour, onDelete, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false);
-    const [draft, setDraft] = useState({gelType, price, shadeName, colour, stock, glitter});
+    const [draft, setDraft] = useState(gelcolour);
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 
     function beginEdit() {
-        setDraft({gelType, price, shadeName, colour, stock, glitter});
+        setDraft(gelcolour);
         setError(''); setIsEditing(true);
     }
     function handleChange(event) {
