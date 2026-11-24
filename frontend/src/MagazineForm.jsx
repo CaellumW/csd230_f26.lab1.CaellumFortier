@@ -20,7 +20,7 @@ export default function MagazineForm({onMagazineAdded}) {
         try {
             const response = await api.post('/magazines', {title, price: Number(price), copies: Number(copies), orderQty: Number(orderQty), currentIssue});
             const savedMag = response.data;
-            if (!response.ok) throw new Error(`Save failed (${response.status})`);
+            if (response.status !== 200) throw new Error(`Save failed (${response.status})`);
             if (!isCurrent()) return;
             onMagazineAdded(savedMag);
             setTitle('');

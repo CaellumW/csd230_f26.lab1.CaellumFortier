@@ -21,7 +21,7 @@ export default function AddColourGelForm({ onColourGelAdded }) {
         try {
             const response = await api.post('/api/rest/gelcolourpolishes/add', {shadeName, gelType, colour, glitter, price: Number(price), stock: Number(stock)});
             const savedGelColour = response.data;
-            if (!response.ok) throw new Error(`Save failed (${response.status})`);
+            if (response.status !== 200) throw new Error(`Save failed (${response.status})`);
             if (!isCurrent()) return;
             onColourGelAdded(savedGelColour);
             setShadeName('');

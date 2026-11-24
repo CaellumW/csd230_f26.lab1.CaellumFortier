@@ -21,7 +21,7 @@ export default function AddBuilderGelForm({ onBuilderGelAdded }) {
         try {
             const response = await api.post('/api/rest/buildergelpolishes/add', {shadeName, gelType, price: Number(price), stock: Number(stock), consistency});
             const savedBuilderGel = response.data;
-            if (!response.ok) {throw new Error(`Save failed (${response.status})`);}
+            if (response.status !== 200) {throw new Error(`Save failed (${response.status})`);}
             if (!isCurrent()) return;
             onBuilderGelAdded(savedBuilderGel);
             setShadeName('');
