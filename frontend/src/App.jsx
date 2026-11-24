@@ -17,6 +17,7 @@ import useAuth from './useAuth.js';
 import Login from './Login.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import DisplayCart from './DisplayCart.jsx';
+import GelColourList from "./GelColourList.jsx";
 
 export default function App() {
     return <AuthProvider><main className="app-container">
@@ -124,56 +125,41 @@ function BookApp() {
             setError(err.message);
         }
     }
+
     // DELETE BUILDER GEL
     async function handleDeleteBuilderGel(id) {
-        const response = await fetch(
-            `/api/rest/buildergelpolishes/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+        if (!window.confirm('Delete this builder gel?')) return;
+        setError('');
+        try {
+            await api.delete(`/api/rest/buildergelpolishes/${id}`);
+            setBuilderGels(previous => previous.filter(buildergel => buildergel.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setBuilderGels(previous =>
-            previous.filter(gel => gel.id !== id)
-        );
     }
+
     // DELETE COLOUR GEL
     async function handleDeleteColourGel(id) {
-        const response = await fetch(
-            `/api/rest/gelcolourpolishes/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+        if (!window.confirm('Delete this colour gel?')) return;
+        setError('');
+        try {
+            await api.delete(`/api/rest/gelcolourpolishes/${id}`);
+            setColourGels(previous => previous.filter(colourgel => colourgel.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setColourGels(previous =>
-            previous.filter(gel => gel.id !== id)
-        );
     }
+
     // DELETE MAGAZINE
     async function handleDeleteMagazine(id) {
-        const response = await fetch(
-            `/api/rest/magazines/${id}`,
-            {
-                method: 'DELETE'
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Delete failed (${response.status})`);
+        if (!window.confirm('Delete this magazine?')) return;
+        setError('');
+        try {
+            await api.delete(`/api/rest/magazines/${id}`);
+            setMagazines(previous => previous.filter(magazine => magazine.id !== id));
+        } catch (err) {
+            setError(err.message);
         }
-
-        setMagazines(previous =>
-            previous.filter(magazine => magazine.id !== id)
-        );
     }
 
     // UPDATE BOOKS
@@ -184,55 +170,23 @@ function BookApp() {
     }
     // UPDATE MAGAZINES
     async function handleUpdateMagazine(id, data) {
-        const response = await fetch(`/api/rest/magazines/${id}`, {
-            method: 'PUT', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error(`Update failed (${response.status})`);
-        const savedMagazine = await response.json();
+        const response = await api.put(`/api/rest/magazines/${id}`, data);
+        const savedMagazine = response.data;
         setBooks(previous => previous.map(magazine => magazine.id === id ? savedMagazine : magazine));
     }
+
     // UPDATE BUILDER GEL
     async function handleUpdateBuilderGel(id, data) {
-        const response = await fetch(
-            `/api/rest/buildergelpolishes/${id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }
-        );
-
-        const savedBuilderGel = await response.json();
-
-        setBuilderGels(previous =>
-            previous.map(gel =>
-                gel.id === id ? savedBuilderGel : gel
-            )
-        );
+        const response = await api.put(`/api/rest/buildergelpolishes/${id}`, data);
+        const savedBuilderGel = response.data;
+        setBuilderGels(previous => previous.map(gel => gel.id === id ? savedBuilderGel : gel));
     }
+
     // UPDATE COLOUR GELS
     async function handleUpdateColourGel(id, data) {
-        const response = await fetch(
-            `/api/rest/gelcolourpolishes/${id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }
-        );
-
-        const savedColourGel = await response.json();
-
-        setColourGels(previous =>
-            previous.map(gel =>
-                gel.id === id ? savedColourGel : gel
-            )
-        );
+        const response = await api.put(`/api/rest/gelcolourpolishes/${id}`, data);
+        const savedColourGel = response.data;
+        setColourGels(previous => previous.map(gel => gel.id === id ? savedColourGel : gel));
     }
 
     return <main className="app-container">
@@ -241,14 +195,13 @@ function BookApp() {
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
-            <Route path="/magazines" element={<MagazineList />} />
-            <Route path="*" element={<h2>Page not found</h2>} />
             <Route path="/add" element={isAdmin ? <AddBookForm onBookAdded={handleBookAdded} /> : <p role="alert">Administrator access is required.</p>} />
-            <Route path="/magazines" element={<MagazineList onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
+            <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
             <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} onUpdate={handleUpdateBuilderGel} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
-            <Route path="/addbuildergel" element={<AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
             <Route path="/colourgels" element={<GelColourList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} onUpdate={handleUpdateColourGel} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
-            <Route path="/addcolourgel" element={<AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
+            <Route path="*" element={<h2>Page not found</h2>} />
             <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
             <NavBar cartCount={cart?.products?.length ?? 0} />
             {cartError && <p role="status">Cart: {cartError}</p>}

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import api from "./api.js";
 import useAuth from './useAuth.js';
 
-export default function MagazineForm({onMagazineAdded}) {
+export default function MagazineForm({ onMagazineAdded }) {
     const { token } = useAuth();
     const isCurrent = () => localStorage.getItem('token') === token;
     const [title, setTitle] = useState('');
