@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 export default function Magazine({ magazine, onUpdate, onDelete, onAddToCart, cartPending, canManage }) {
-    const [isEditing, setIsEditing] = useState(false);const [draft, setDraft] = useState({ title, price, copies, orderQty, currentIssue });
+    const [isEditing, setIsEditing] = useState(false);
+    const [draft, setDraft] = useState({ title, price, copies, orderQty, currentIssue });
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 

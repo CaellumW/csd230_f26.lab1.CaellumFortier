@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
 export default function Book({ book, onDelete, onUpdate, onAddToCart, cartPending, canManage }) {
-    const [isEditing, setIsEditing] = useState(false);const [draft, setDraft] = useState(book);
+    const [isEditing, setIsEditing] = useState(false);
+    const [draft, setDraft] = useState(book);
     const [error, setError] = useState('');
     const [saving, setSaving] = useState(false);
 
