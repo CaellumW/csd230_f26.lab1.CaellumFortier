@@ -14,15 +14,20 @@ export default function MagazineForm({onMagazineAdded}) {
     const [saving, setSaving] = useState(false);
 
     async function handleSubmit(event) {
-        event.preventDefault(); setError(''); setSaving(true);
+        event.preventDefault();
+        setError('');
+        setSaving(true);
         try {
-            const response = await api.post('/magazines', {
-                title, price: Number(price), copies: Number(copies),
-                orderQty: Number(orderQty), currentIssue
-            });
+            const response = await api.post('/magazines', {title, price: Number(price), copies: Number(copies), orderQty: Number(orderQty), currentIssue});
+            const savedMag = response.data;
+            if (!response.ok) throw new Error(`Save failed (${response.status})`);
             if (!isCurrent()) return;
-            onMagazineAdded(response.data);
-            setTitle(''); setPrice(''); setCopies(1); setOrderQty(1); setCurrentIssue('');
+            onMagazineAdded(savedMag);
+            setTitle('');
+            setPrice('');
+            setCopies(1);
+            setOrderQty(1);
+            setCurrentIssue('');
         } catch (err) { if (isCurrent()) setError(err.message); }
         finally { if (isCurrent()) setSaving(false); }
     }

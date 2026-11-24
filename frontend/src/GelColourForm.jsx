@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import useAuth from "./useAuth.js";
+import api from "./api.js";
 
 export default function AddColourGelForm({ onColourGelAdded }) {
+    const { token } = useAuth();
+    const isCurrent = () => localStorage.getItem('token') === token;
     const [shadeName, setShadeName] = useState('');
     const [gelType, setGelType] = useState('');
     const [colour, setColour] = useState('');
@@ -14,28 +18,23 @@ export default function AddColourGelForm({ onColourGelAdded }) {
         event.preventDefault();
         setError('');
         setSaving(true);
-
-        try {const response = await fetch('/api/rest/gelcolourpolishes/add', {method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({shadeName, gelType, colour, glitter, price: Number(price), stock: Number(stock)})
-            });
-            if (!response.ok) {throw new Error(`Save failed (${response.status})`);}
-            const savedColourGel = await response.json();
-            onColourGelAdded(savedColourGel);
+        try {
+            const response = await api.post('/api/rest/gelcolourpolishes/add', {shadeName, gelType, colour, glitter, price: Number(price), stock: Number(stock)});
+            const savedGelColour = response.data;
+            if (!response.ok) throw new Error(`Save failed (${response.status})`);
+            if (!isCurrent()) return;
+            onColourGelAdded(savedGelColour);
             setShadeName('');
             setGelType('');
             setColour('');
             setGlitter(false);
             setPrice('');
             setStock(0);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setSaving(false);
-        }
+        } catch (err) { if (isCurrent()) setError(err.message);}
+        finally { if (isCurrent()) setSaving(false); }
     }
 
-    return (
-        <form onSubmit={handleSubmit}>
+    return <form onSubmit={handleSubmit}>
             <h2>Add New Colour Gel</h2>
             <label>Shade Name<input value={shadeName} onChange={e => setShadeName(e.target.value)} required/></label>
             <label>Gel Type<input value={gelType} onChange={e => setGelType(e.target.value)} required/></label>
@@ -45,6 +44,5 @@ export default function AddColourGelForm({ onColourGelAdded }) {
             <label>Stock<input type="number" min="0" step="1" value={stock} onChange={e => setStock(e.target.value)} required/></label>
             <button disabled={saving}>Save Colour Gel</button>
             {error && <p role="alert">{error}</p>}
-        </form>
-    );
+        </form>;
 }
