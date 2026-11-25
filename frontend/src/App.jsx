@@ -1,7 +1,6 @@
 import './App.css';
 import BuilderGelList from './BuilderGelList.jsx';
 import AddBuilderGelForm from './BuilderGelForm.jsx';
-import ColourGelList from './GelColourList.jsx';
 import AddColourGelForm from './GelColourForm.jsx';
 import api from './api.js';
 import { useState, useEffect } from 'react';
@@ -197,11 +196,11 @@ function BookApp() {
             <Route path="/" element={<Home/>}/>
             <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
             <Route path="/add" element={isAdmin ? <AddBookForm onBookAdded={handleBookAdded} /> : <p role="alert">Administrator access is required.</p>} />
-            <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} canManage={isAdmin} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} />} />
-            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} canManage={isAdmin} onUpdate={handleUpdateBuilderGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
-            <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
-            <Route path="/colourgels" element={<GelColourList colourGels={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} canManage={isAdmin} onUpdate={handleUpdateColourGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
-            <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
+            <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} canManage={isAdmin} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
+            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} canManage={isAdmin} onUpdate={handleUpdateBuilderGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
+            <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/> : <p role="alert">Administrator access is required.</p>}/>
+            <Route path="/colourgels" element={<GelColourList gelcolours={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} canManage={isAdmin} onUpdate={handleUpdateColourGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
+            <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/> : <p role="alert">Administrator access is required.</p>}/>
             <Route path="*" element={<h2>Page not found</h2>} />
             <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
         </Routes>
