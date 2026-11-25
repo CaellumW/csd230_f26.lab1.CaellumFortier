@@ -17,7 +17,7 @@ export default function AddBookForm({onBookAdded}) {
         setError('');
         setSaving(true);
         try {
-            const response = await api.post('/books', {title, author, price: Number(price), copies: Number(copies)});
+            const response = await api.post('/books/add', {title, author, price: Number(price), copies: Number(copies)});
             const savedBook = response.data;
             if (response.status !== 200) throw new Error(`Save failed (${response.status})`);
             if (!isCurrent()) return;
