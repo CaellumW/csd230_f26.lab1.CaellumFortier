@@ -17,6 +17,7 @@ import Login from './Login.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import DisplayCart from './DisplayCart.jsx';
 import GelColourList from "./GelColourList.jsx";
+import MagazineForm from "./MagazineForm.jsx";
 
 export default function App() {
     return <AuthProvider><main className="app-container">
@@ -197,6 +198,7 @@ function BookApp() {
             <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
             <Route path="/add" element={isAdmin ? <AddBookForm onBookAdded={handleBookAdded} /> : <p role="alert">Administrator access is required.</p>} />
             <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} canManage={isAdmin} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
+            <Route path="/magazines/add" element={isAdmin ? <MagazineForm onMagazineAdded={handleMagazineAdded}/> : <p role="alert">Administrator access is required.</p> } />
             <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} canManage={isAdmin} onUpdate={handleUpdateBuilderGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
             <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/> : <p role="alert">Administrator access is required.</p>}/>
             <Route path="/colourgels" element={<GelColourList gelcolours={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} canManage={isAdmin} onUpdate={handleUpdateColourGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
