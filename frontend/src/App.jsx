@@ -190,19 +190,18 @@ function BookApp() {
     }
 
     return <main className="app-container">
-        {/*<h1>My Bookstore Frontend</h1>*/}
         <NavBar cartCount={cart?.products?.length ?? 0} />
         {cartError && <p role="status">Cart: {cartError}</p>}
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
+            <Route path="/inventory" element={<BookList books={books} loading={loading} error={error} onDelete={handleDeleteBook} onUpdate={handleUpdateBook} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>} />
             <Route path="/add" element={isAdmin ? <AddBookForm onBookAdded={handleBookAdded} /> : <p role="alert">Administrator access is required.</p>} />
-            <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} canManage={isAdmin} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>} />
+            <Route path="/magazines" element={<MagazineList magazines={magazines} loading={loading} error={error} onDelete={handleDeleteMagazine} canManage={isAdmin} onUpdate={handleUpdateMagazine} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>} />
             <Route path="/magazines/add" element={isAdmin ? <MagazineForm onMagazineAdded={handleMagazineAdded}/> : <p role="alert">Administrator access is required.</p> } />
-            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} canManage={isAdmin} onUpdate={handleUpdateBuilderGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
-            <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/> : <p role="alert">Administrator access is required.</p>}/>
-            <Route path="/colourgels" element={<GelColourList gelcolours={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} canManage={isAdmin} onUpdate={handleUpdateColourGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/>}/>
-            <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} value={token}/> : <p role="alert">Administrator access is required.</p>}/>
+            <Route path="/buildergels" element={<BuilderGelList buildergels={builderGels} loading={loading} error={error} onDelete={handleDeleteBuilderGel} canManage={isAdmin} onUpdate={handleUpdateBuilderGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addbuildergel" element={isAdmin ? <AddBuilderGelForm onBuilderGelAdded={handleBuilderGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/> : <p role="alert">Administrator access is required.</p>}/>
+            <Route path="/colourgels" element={<GelColourList gelcolours={colourGels} loading={loading} error={error} onDelete={handleDeleteColourGel} canManage={isAdmin} onUpdate={handleUpdateColourGel} canManage={isAdmin} onAddToCart={changeCart} cartPending={cartLoading || cartPending}/>}/>
+            <Route path="/addcolourgel" element={isAdmin ? <AddColourGelForm onColourGelAdded={handleColourGelAdded} onAddToCart={changeCart} cartPending={cartLoading || cartPending} /> : <p role="alert">Administrator access is required.</p>}/>
             <Route path="*" element={<h2>Page not found</h2>} />
             <Route path="/cart" element={<DisplayCart cart={cart} loading={cartLoading} error={cartError} pending={cartPending} onRemove={id => changeCart(id, true)} />} />
         </Routes>
