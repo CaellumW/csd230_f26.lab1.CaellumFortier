@@ -61,11 +61,11 @@ public class WebSecurityConfig {
                                 // NEW REST API Security (Requires Role)
 
                                 // Current-user JSON actions: controller resolves ownership from Principal.
-                                .requestMatchers(HttpMethod.GET, "/api/rest/carts/mine").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/api/rest/carts/mine/products/*").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers(HttpMethod.DELETE, "/api/rest/carts/mine/products/*").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/rest/cart/mine").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/rest/cart/mine/products/*").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/rest/cart/mine/products/*").hasAnyRole("USER", "ADMIN")
                                 // Original whole-cart CRUD is administrative, including list/by-ID reads.
-                                .requestMatchers("/api/rest/carts", "/api/rest/carts/**").hasRole("ADMIN")
+                                .requestMatchers("/api/rest/cart", "/api/rest/cart/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/rest/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/api/rest/**").hasRole("ADMIN")
 
